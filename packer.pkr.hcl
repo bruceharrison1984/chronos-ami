@@ -6,7 +6,7 @@ variable "ami_name" {
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "rhel8" {
-  ami_name      = "packer example ${local.timestamp}"
+  ami_name      = "cardano-node-${local.timestamp}"
   instance_type = "m5.xlarge"
   region        = "us-east-1"
   source_ami_filter {
@@ -33,13 +33,12 @@ build {
   provisioner "shell" {
     inline = [
       "chmod -R +x ~/setup_scripts/*.sh",
-      "~/setup_scripts/install-cloudwatch.sh",
-      "sudo -i -u cardano -H sh -c ~/setup_scripts/install-guild-operators.sh",
-      "sudo -i -u cardano -H sh -c ~/setup_scripts/install-cardano.sh"
+      "~/setup_scripts/init.sh",
+      "sudo -i -u cardano -H sh -c '/setup_scripts/install-guild-operators.sh'",
+      "sudo -i -u cardano -H sh -c '/setup_scripts/install-cardano.sh'"
     ]
     environment_vars = [
       "CARDANO_USER_HOME=/home/cardano/tmp"
     ]
   }
 }
-
