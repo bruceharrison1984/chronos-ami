@@ -1,8 +1,3 @@
-variable "ami_name" {
-  type    = string
-  default = "red-hat-8"
-}
-
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "rhel8" {
