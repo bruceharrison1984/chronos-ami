@@ -7,6 +7,8 @@ source "amazon-ebs" "rhel8" {
   region          = "us-east-1"
   ena_support     = true
   ssh_username    = "ec2-user"
+  encrypt_boot    = true
+  ebs_optimized   = true
 
   source_ami_filter {
     filters = {
@@ -19,8 +21,11 @@ source "amazon-ebs" "rhel8" {
   }
 
   tags = {
-    Name      = "cardano-node-${local.timestamp}"
-    CreatedOn = timestamp()
+    Name         = "cardano-node-${local.timestamp}"
+    CreatedOn    = timestamp()
+    ENA          = true
+    EBSOptimized = true
+    Encrypted    = true
   }
 }
 
