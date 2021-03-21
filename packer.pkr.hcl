@@ -1,9 +1,13 @@
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "rhel8" {
-  ami_name      = "cardano-node-${local.timestamp}"
-  instance_type = "m5.xlarge"
-  region        = "us-east-1"
+  ami_name        = "cardano-node-${local.timestamp}"
+  ami_description = "Provisioned AMI for running a Cardano cluster"
+  instance_type   = "m5.4xlarge"
+  region          = "us-east-1"
+  ena_support     = true
+  ssh_username    = "ec2-user"
+
   source_ami_filter {
     filters = {
       name                = "RHEL-8.*_HVM-*-x86_64-0-Hourly2-GP2"
@@ -13,7 +17,11 @@ source "amazon-ebs" "rhel8" {
     most_recent = true
     owners      = ["309956199498"]
   }
-  ssh_username = "ec2-user"
+
+  tags = {
+    Name      = "cardano-node-${local.timestamp}"
+    CreatedOn = timestamp()
+  }
 }
 
 build {
