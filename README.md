@@ -4,6 +4,8 @@
 This repo contains a HashiCorp Packer template that can be used to build a Cardano node image. This can greatly speed up deployment in AWS, as well as
 guarantee consistency between nodes.
 
+The finished image is placed in your personal AWS AMI respoitory, so you can feel safe knowing where it came from.
+
 ## Prerequsites
 - Packer
 - AWSCLI
