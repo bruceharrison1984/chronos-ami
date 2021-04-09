@@ -1,4 +1,4 @@
-** This is an experimental project, use at your own risk!**
+**This is an experimental project, use at your own risk!**
 
 # Cardano AMI
 This repo contains a HashiCorp Packer template that can be used to build a Cardano node image. This can greatly speed up deployment in AWS, as well as
