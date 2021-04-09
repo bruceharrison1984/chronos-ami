@@ -23,6 +23,7 @@ For help setting up Packer, see the offical documentation.
 We use a large instance size to speed up the build process, but it *should* result in charges less than $1. Keep an eye on the build process to make sure it doesn't run for a long period of time!
 
 ## Installed Items
+- RHEL Linux 8 is used as the OS
 - All Cardano items are built from latest available sources
   - Offical cardano-node and cardano-cli executables
   - Guild Operators scripts
