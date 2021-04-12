@@ -32,7 +32,7 @@ sudo dnf install google-authenticator qrencode -y
 echo "-= Install Fail2Ban =-"
 sudo dnf install -y fail2ban
 sudo systemctl enable fail2ban
-sudo cat <<EOF > /etc/fail2ban/jail.d/sshd.local
+sudo sh -c 'cat <<EOF > /etc/fail2ban/jail.d/sshd.local
 [sshd]
 enabled = true
 port = ssh
@@ -40,10 +40,10 @@ action = iptables-multiport
 logpath = /var/log/secure
 maxretry = 3
 bantime = 600
-EOF
+EOF'
 
 echo "-= Setup first run MOTD =-"
-sudo sh -c 'sudo cat <<EOF > /etc/motd
+sudo sh -c 'cat <<EOF > /etc/motd
        ____    _    ____  ____    _    _   _  ___          _    __  __ ___ 
       / ___|  / \  |  _ \|  _ \  / \  | \ | |/ _ \        / \  |  \/  |_ _|
      | |     / _ \ | |_) | | | |/ _ \ |  \| | | | |_____ / _ \ | |\/| || | 
@@ -62,6 +62,8 @@ Notes:
   - Change it within $CNODE_HOME/scripts/env
 - ec2-user login is enabled in order to securely deploy with AWS SSH keys the first time
   - You can remove/disable this user if you want, but make sure to setup a new SSH user first!
+- cardano user has sudo permissions.
+  - you probably want to remove these once you get your node up and running
 
                *disable this message by running "touch $HOME/.hushlogin*
 EOF'

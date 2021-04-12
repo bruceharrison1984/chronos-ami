@@ -21,6 +21,11 @@
             "file_path": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log",
             "log_stream_name": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent",
             "log_group_name": "/${log_group_prefix}/{hostname}"
+          },
+          {
+            "file_path": "/var/log/secure",
+            "log_stream_name": "/var/log/secure",
+            "log_group_name": "/${log_group_prefix}/{hostname}"
           }
         ]
       }
