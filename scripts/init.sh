@@ -58,7 +58,8 @@ Notes:
   - This must be manually configured in order to use it
   - RHEL instructions can be found here: https://www.redhat.com/sysadmin/mfa-linux
 - POOL_NAME is not set
-  - Set it within $CNODE_HOME/scripts/env
+  - Nodes are relays by default
+  - Set it within $CNODE_HOME/scripts/env to make it a block-producer
 - CNODE_PORT is set to 6000
   - Change it within $CNODE_HOME/scripts/env
 - ec2-user login is enabled in order to securely deploy with AWS SSH keys the first time
