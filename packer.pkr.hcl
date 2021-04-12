@@ -10,6 +10,12 @@ source "amazon-ebs" "rhel8" {
   encrypt_boot    = true
   ebs_optimized   = true
 
+  launch_block_device_mappings {
+    device_name = "/dev/sda1"
+    volume_size = 20
+    encrypted = true
+  }
+  
   source_ami_filter {
     filters = {
       name                = "RHEL-8.*_HVM-*-x86_64-0-Hourly2-GP2"
