@@ -9,6 +9,8 @@ The finished image is placed in your personal AWS AMI respoitory, so you can fee
 ## Prerequsites
 - Packer
 - AWSCLI
+- Default VPC in AWS
+  - Not having a default VPC will prevent the build instance from launching
 
 ## Usage
 ```sh
