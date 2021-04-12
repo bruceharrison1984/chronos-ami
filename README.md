@@ -31,3 +31,6 @@ We use a large instance size to speed up the build process, but it *should* resu
   - Guild Operators scripts
   - Cloudwatch Logging/Monitoring
 - Cloudwatch uses the latest pre-built version
+
+## Users
+ec2-user is still used to login, and all Cardano items are installed under the `cardano` user. The `cardano` user still has `sudo` privileges upon boot, so if you do not want this be sure to remove it. It is intentionally left in since this image is primarily for fast testing.
