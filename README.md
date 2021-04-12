@@ -34,3 +34,7 @@ We use a large instance size to speed up the build process, but it *should* resu
 
 ## Users
 ec2-user is still used to login, and all Cardano items are installed under the `cardano` user. The `cardano` user still has `sudo` privileges upon boot, so if you do not want this be sure to remove it. It is intentionally left in since this image is primarily for fast testing.
+
+## Contribute
+PRs are very welcome, as well as ADA donations:
+- addr1qx2t4hr27795vwfpqffca6dzt9kfw77h362f0un0h2m8rsn0k2ukr28kxc4fzuxvrwf535zw78cc2p3er9hlnled9nsqhqc9uz
