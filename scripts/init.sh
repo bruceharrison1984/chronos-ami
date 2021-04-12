@@ -56,6 +56,7 @@ Notes:
   - This config will ban for 10 minutes. Change it if you desire different behavior
 - Google Authenticator is installed
   - This must be manually configured in order to use it
+  - RHEL instructions can be found here: https://www.redhat.com/sysadmin/mfa-linux
 - POOL_NAME is not set
   - Set it within $CNODE_HOME/scripts/env
 - CNODE_PORT is set to 6000
