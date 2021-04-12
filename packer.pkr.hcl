@@ -51,8 +51,5 @@ build {
       "sudo -i -u cardano -H sh -c '/setup_scripts/install-guild-operators.sh'",
       "sudo -i -u cardano -H sh -c '/setup_scripts/install-cardano.sh'"
     ]
-    environment_vars = [
-      "CARDANO_USER_HOME=/home/cardano/tmp"
-    ]
   }
 }
