@@ -27,9 +27,9 @@ We use a large instance size to speed up the build process, but it *should* resu
 ## Installed Items
 - RHEL Linux 8 is used as the OS
 - All Cardano items are built from latest available sources
-  - Offical cardano-node and cardano-cli executables
-  - Guild Operators scripts
-  - Cloudwatch Logging/Monitoring
+  - [Offical cardano-node and cardano-cli executables](https://github.com/input-output-hk/cardano-node)
+  - [Guild Operators scripts](https://github.com/cardano-community/guild-operators)
+  - [Cloudwatch Logging/Monitoring](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)
 - Cloudwatch uses the latest pre-built version
 
 ## Users
