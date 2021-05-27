@@ -14,7 +14,7 @@ The finished image is placed in your personal AWS AMI respoitory, so you can fee
 
 ## Usage
 ```sh
-packer build . packer.pkr.hcl
+packer build ./packer.pkr.hcl
 ```
 This will begin the building process, and save the AMI to your AWS account when finished.
 
