@@ -7,4 +7,4 @@ sudo curl -sS -o /setup_scripts/downloads/prereqs.sh https://raw.githubuserconte
 sudo chmod 755 /setup_scripts/downloads/prereqs.sh
 
 echo "-= Running guild-operators setup script =-"
-/setup_scripts/downloads/prereqs.sh -l -c
+/setup_scripts/downloads/prereqs.sh -c
