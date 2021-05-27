@@ -12,7 +12,7 @@ source "amazon-ebs" "rhel8" {
 
   launch_block_device_mappings {
     device_name = "/dev/sda1"
-    volume_size = 20
+    volume_size = 50
     encrypted = true
   }
   
