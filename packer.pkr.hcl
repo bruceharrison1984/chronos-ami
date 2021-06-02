@@ -1,13 +1,3 @@
-variable "build_number" {
-  type = string
-  default = "6263009"
-}
-
-variable "node_version" {
-  type = string
-  default = "1.27.0"
-}
-
 variable "node_config" {
   type = string
   default = "mainnet"
@@ -66,8 +56,6 @@ build {
   }
   provisioner "shell" {
     environment_vars = [
-      "NODE_BUILD_NUM=${var.build_number}",
-      "NODE_VERSION=${var.node_version}",
       "NODE_CONFIG=${var.node_config}",
       "NODE_HOME=${var.node_home}",
     ]
@@ -76,6 +64,7 @@ build {
       "~/setup/init.sh",
       "~/setup/cardano.sh",
       "~/setup/extras.sh",
+      "rm -rf ~/setup"
     ]
   }
 }
