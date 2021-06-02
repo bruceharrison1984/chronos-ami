@@ -60,11 +60,11 @@ build {
       "NODE_HOME=${var.node_home}",
     ]
     inline = [
-      "chmod -R +x ~/setup/*.sh",
-      "~/setup/init.sh",
-      "~/setup/cardano.sh",
-      "~/setup/extras.sh",
-      "rm -rf ~/setup"
+      "chmod -R +x /home/ec2-user/setup/*.sh",
+      "/home/ec2-user/setup/init.sh",
+      "/home/ec2-user/setup/cardano.sh",
+      "/home/ec2-user/setup/extras.sh",
+      "rm -rf /home/ec2-user/setup"
     ]
   }
 }
