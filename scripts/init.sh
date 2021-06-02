@@ -18,4 +18,6 @@ sudo systemctl enable amazon-cloudwatch-agent.service
 echo -e "\n-= Setup EnvVars =-"
 echo export NODE_HOME=${NODE_HOME} >> $HOME/.bashrc
 echo export NODE_CONFIG=${NODE_CONFIG} >> $HOME/.bashrc
-echo export CARDANO_NODE_SOCKET_PATH="${NODE_HOME}/db/socket" >> $HOME/.bashrc
+echo export CARDANO_DB_PATH="${NODE_HOME}/db" >> $HOME/.bashrc
+echo export CARDANO_NODE_SOCKET_PATH="${CARDANO_DB}/socket" >> $HOME/.bashrc
+echo export NODE_PORT="6000" >> $HOME/.bashrc
