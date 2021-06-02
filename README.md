@@ -4,7 +4,11 @@
 This repo contains a HashiCorp Packer template that can be used to build a Cardano node image. This can greatly speed up deployment in AWS, as well as
 guarantee consistency between nodes.
 
-The finished image is placed in your personal AWS AMI respoitory, so you can feel safe knowing where it came from.
+We do not build from sources, but we do download the latest cardano-node binaries and configuration JSON files. We don't build from source
+because it allows us to focus on hardening the image, and not packaging it with a bunch of build-time dependencies that could lead to security issues
+down the road. It also allows the image to be built extremely quickly.
+
+The finished image is placed in your private personal AWS AMI respoitory, so you can feel safe knowing where it came from.
 
 ## Prerequsites
 - Packer
@@ -26,9 +30,13 @@ We use a large instance size to speed up the build process, but it *should* resu
 
 ## Installed Items
 - Latest Amazon Linux 2 OS
-- Slected Cardano binaries are downloaded from IOHK Hydra
+- Latest Cardano binaries are downloaded from IOHK Hydra
 - Cloudwatch uses the latest pre-built version
   - Cloudwatch is preconfigured for logs
+- Google Authenticator installed
+  - Must be configured
+- Fail2Ban installed
+  - 10 minute ban
 
 ## AMI Configuration
 - ENA Enabled
@@ -36,7 +44,10 @@ We use a large instance size to speed up the build process, but it *should* resu
 - Drive Encryption Enabled (AWS Keys)
 
 ## Users
-ec2-user is still used to login.
+- ec2-user is used to login with private key
+  - This can be altered via UserData/CloudInit scripts when you launch the image
+- Cloudwatch runs under the `cwagent` user, 
+  - `cwagent` has `adm` permissions
 
 ## Contribute
 PRs are very welcome, as well as ADA donations:
