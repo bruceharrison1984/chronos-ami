@@ -5,6 +5,8 @@ set -e
 
 echo -e "\n-= Create /cardano directory =-"
 sudo mkdir /cardano/scripts -p
+sudo mkdir /cardano/keys -p
+sudo mkdir /cardano/config -p
 
 echo -e "\n-= Download latest binares from https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1 =-"
 sudo mkdir ${HOME}/cardano
@@ -22,37 +24,42 @@ echo -e "\n-= Download Configuration Files =-"
 NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')
 DOWNLOAD_URL=https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1
 
-cd ${NODE_HOME}
+cd ${NODE_HOME}/config
 sudo curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-topology.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-shelley-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-config.json
 
 # echo -e "\n Enable TraceBlockFetchDecisions"
-# sed -i ${NODE_CONFIG}-config.json -e "s/TraceBlockFetchDecisions\": false/TraceBlockFetchDecisions\": true/g"
+# sed -i ${NODE_HOME}/config/${NODE_CONFIG}-config.json -e "s/TraceBlockFetchDecisions\": false/TraceBlockFetchDecisions\": true/g"
 
-# echo -e "\n-= Create Startup Scripts =-"
-# cat > $NODE_HOME/Start-Block-Producer.sh << EOF 
-# #!/bin/bash
-# DIRECTORY=$NODE_HOME
-# PORT=6000
-# HOSTADDR=0.0.0.0
-# TOPOLOGY=\${DIRECTORY}/${NODE_CONFIG}-topology.json
-# DB_PATH=\${DIRECTORY}/db
-# SOCKET_PATH=\${DIRECTORY}/db/socket
-# CONFIG=\${DIRECTORY}/${NODE_CONFIG}-config.json
-# /usr/local/bin/cardano-node run --topology \${TOPOLOGY} --database-path \${DB_PATH} --socket-path \${SOCKET_PATH} --host-addr \${HOSTADDR} --port \${PORT} --config \${CONFIG}
-# EOF
-# chmod +x $NODE_HOME/Start-Block-Producer.sh
+echo -e "\n-= Create Relay Startup Script =-"
+cat <<EOF >> ${NODE_HOME}/scripts/start-relay.sh
+#!/bin/bash
 
-# cat > $NODE_HOME/Start-Relay.sh << EOF 
-# #!/bin/bash
-# DIRECTORY=$NODE_HOME
-# PORT=6000
-# HOSTADDR=0.0.0.0
-# TOPOLOGY=\${DIRECTORY}/${NODE_CONFIG}-topology.json
-# DB_PATH=\${DIRECTORY}/db
-# SOCKET_PATH=\${DIRECTORY}/db/socket
-# CONFIG=\${DIRECTORY}/${NODE_CONFIG}-config.json
-# /usr/local/bin/cardano-node run --topology \${TOPOLOGY} --database-path \${DB_PATH} --socket-path \${SOCKET_PATH} --host-addr \${HOSTADDR} --port \${PORT} --config \${CONFIG}
-# EOF
+/usr/local/bin/cardano-node run \
+  --topology ${NODE_HOME}/config/${NODE_CONFIG}-topology.json \
+  --database-path ${CARDANO_DB_PATH} \
+  --socket-path ${CARDANO_NODE_SOCKET_PATH} \
+  --host-addr 0.0.0.0 \
+  --port ${NODE_PORT} \
+  --config ${NODE_HOME}/config/${NODE_CONFIG}-config.json
+EOF
+chmod +x $NODE_HOME/scripts/start-relay.sh
+
+echo -e "\n-= Create Block Producer Startup Script =-"
+cat <<EOF >> ${NODE_HOME}/scripts/start-block-producer.sh
+#!/bin/bash
+
+/usr/local/bin/cardano-node run \
+  --topology ${NODE_HOME}/config/${NODE_CONFIG}-topology.json \
+  --database-path ${CARDANO_DB_PATH} \
+  --socket-path ${CARDANO_NODE_SOCKET_PATH} \
+  --host-addr 0.0.0.0 \
+  --port ${NODE_PORT} \
+  --config ${NODE_HOME}/config/${NODE_CONFIG}-config.json
+  --shelley-kes-key ${NODE_HOME}/keys/kes.skey \
+  --shelley-vrf-key ${NODE_HOME}/keys/vrf.skey \
+  --shelley-operational-certificate ${NODE_HOME}/keys/node.cert
+EOF
+chmod +x $NODE_HOME/scripts/start-block-producer.sh
