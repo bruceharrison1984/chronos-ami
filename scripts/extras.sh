@@ -29,4 +29,5 @@ sudo sh -c 'cat <<EOF > /etc/update-motd.d/30-banner
      | |___ / ___ \|  _ <| |_| / ___ \| |\  | |_| |_____/ ___ \| |  | || | 
       \____/_/   \_\_| \_\____/_/   \_\_| \_|\___/     /_/   \_\_|  |_|___|
                       * EXPERIMENTAL -USE AT OWN RISK-*
+              * https://github.com/bruceharrison1984/cardano-ami*
 EOF'
