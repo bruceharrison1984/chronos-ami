@@ -25,15 +25,18 @@ For help setting up Packer, see the offical documentation.
 We use a large instance size to speed up the build process, but it *should* result in charges less than $1. Keep an eye on the build process to make sure it doesn't run for a long period of time!
 
 ## Installed Items
-- RHEL Linux 8 is used as the OS
-- All Cardano items are built from latest available sources
-  - [Offical cardano-node and cardano-cli executables](https://github.com/input-output-hk/cardano-node)
-  - [Guild Operators scripts](https://github.com/cardano-community/guild-operators)
-  - [Cloudwatch Logging/Monitoring](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)
+- Latest Amazon Linux 2 OS
+- Slected Cardano binaries are downloaded from IOHK Hydra
 - Cloudwatch uses the latest pre-built version
+  - Cloudwatch is preconfigured for logs
+
+## AMI Configuration
+- ENA Enabled
+- EBS Optimized Enabled
+- Drive Encryption Enabled (AWS Keys)
 
 ## Users
-ec2-user is still used to login, and all Cardano items are installed under the `cardano` user. The `cardano` user still has `sudo` privileges upon boot, so if you do not want this be sure to remove it. It is intentionally left in since this image is primarily for fast testing.
+ec2-user is still used to login.
 
 ## Contribute
 PRs are very welcome, as well as ADA donations:

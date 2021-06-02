@@ -2,7 +2,7 @@
 set -e
 
 echo -e "\n-= Install Google Authentication =-"
-echo -e "\n-= (This needs to be manually setup once you start a server with this image) =-"
+echo -e "-= (This needs to be manually setup once you start a server with this image) =-"
 sudo yum -y install google-authenticator qrencode
 
 echo -e "\n-= Install Fail2Ban =-"

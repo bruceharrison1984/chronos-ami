@@ -18,7 +18,7 @@ variable "node_home" {
   default = "/cardano"
 }
 
-locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
+locals { timestamp = regex_replace(timestamp(), "[T:]", "-") }
 
 source "amazon-ebs" "aws_linux" {
   ami_name        = "cardano-node-${local.timestamp}"

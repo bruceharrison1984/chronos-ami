@@ -16,7 +16,7 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-c
 sudo systemctl enable amazon-cloudwatch-agent.service
 
 echo -e "\n-= Setup EnvVars =-"
-echo export NODE_HOME=${NODE_HOME} >> $HOME/.profile
-echo export NODE_CONFIG=${NODE_CONFIG} >> $HOME/.profile
-echo export NODE_BUILD_NUM=${NODE_BUILD_NUM} >> $HOME/.profile
-echo export NODE_VERSION=${NODE_VERSION} >> $HOME/.profile
+echo export NODE_HOME=${NODE_HOME} >> $HOME/.bashrc
+echo export NODE_CONFIG=${NODE_CONFIG} >> $HOME/.bashrc
+echo export NODE_BUILD_NUM=${NODE_BUILD_NUM} >> $HOME/.bashrc
+echo export NODE_VERSION=${NODE_VERSION} >> $HOME/.bashrc

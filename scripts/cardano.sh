@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-. ~/.profile
+. ~/.bashrc
 
 export DOWNLOAD_URL=https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1
 export FILENAME=cardano-node-${NODE_VERSION}-linux.tar.gz
