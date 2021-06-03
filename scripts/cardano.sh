@@ -13,8 +13,9 @@ sudo mkdir ${HOME}/cardano
 cd ${HOME}/cardano
 sudo curl --silent -L -o cardano.tar.gz https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1
 sudo tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
-sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
 sudo rm -rf ${HOME}/cardano
+
+
 
 echo -e "\n-= Check Cardano is working =-"
 cardano-cli version
@@ -28,10 +29,11 @@ cd ${NODE_HOME}/config
 sudo curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-topology.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-shelley-genesis.json \
+  -O ${DOWNLOAD_URL}/${NODE_CONFIG}-alonzo-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-config.json
 
-# echo -e "\n Enable TraceBlockFetchDecisions"
-# sed -i ${NODE_HOME}/config/${NODE_CONFIG}-config.json -e "s/TraceBlockFetchDecisions\": false/TraceBlockFetchDecisions\": true/g"
+echo -e "\n Enable TraceBlockFetchDecisions"
+sudo sed -i ${NODE_HOME}/config/${NODE_CONFIG}-config.json -e "s/TraceBlockFetchDecisions\": false/TraceBlockFetchDecisions\": true/g"
 
 echo -e "\n-= Create Relay Startup Script =-"
 cat <<EOF >> ${NODE_HOME}/scripts/start-relay.sh
@@ -63,3 +65,6 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-block-producer.sh
   --shelley-operational-certificate ${NODE_HOME}/keys/node.cert
 EOF
 chmod +x $NODE_HOME/scripts/start-block-producer.sh
+
+echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
+sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
