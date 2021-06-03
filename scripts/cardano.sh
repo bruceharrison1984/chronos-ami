@@ -15,12 +15,6 @@ sudo curl --silent -L -o cardano.tar.gz https://hydra.iohk.io/job/Cardano/cardan
 sudo tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 sudo rm -rf ${HOME}/cardano
 
-
-
-echo -e "\n-= Check Cardano is working =-"
-cardano-cli version
-cardano-node version
-
 echo -e "\n-= Download Configuration Files =-"
 NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')
 DOWNLOAD_URL=https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1
@@ -68,3 +62,7 @@ chmod +x $NODE_HOME/scripts/start-block-producer.sh
 
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
 sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
+
+echo -e "\n-= Check Cardano is working =-"
+cardano-cli version
+cardano-node version
