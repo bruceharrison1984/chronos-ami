@@ -3,11 +3,6 @@ variable "node_config" {
   default = "mainnet"
 }
 
-variable "node_home" {
-  type = string
-  default = "/cardano"
-}
-
 variable "username" {
   type = string
   default = "cardano"
@@ -63,7 +58,7 @@ build {
   provisioner "shell" {
     environment_vars = [
       "NODE_CONFIG=${var.node_config}",
-      "NODE_HOME=${var.node_home}",
+      "NODE_HOME=/cardano",
       "USERNAME=${var.username}",
     ]
     inline = [
