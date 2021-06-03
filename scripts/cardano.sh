@@ -19,11 +19,10 @@ sudo curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-alonzo-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-config.json
 
-echo -e "\n-= Enable TraceBlockFetchDecisions =-"
-sudo sed -i ${NODE_HOME}/config/${NODE_CONFIG}-config.json -e "s/TraceBlockFetchDecisions\": false/TraceBlockFetchDecisions\": true/g"
-
-echo -e "\n-= Set logs to JSON =-"
-sudo sed -i ${NODE_HOME}/config/${NODE_CONFIG}-config.json -e "s/ScText/ScJson/g"
+echo -e "\n-= Rewriting ${NODE_CONFIG}-config.json =-"
+sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 
 echo -e "\n-= Create .env Script =-"
 sudo cat <<EOF >> ${NODE_HOME}/scripts/.env
