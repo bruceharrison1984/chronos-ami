@@ -91,6 +91,13 @@
             "file_path": "/var/log/secure",
             "log_stream_name": "/var/log/secure",
             "log_group_name": "/${log_group_prefix}/{hostname}"
+          },
+          {
+            "file_path": "/cardano/logs/log-**",
+            "log_stream_name": "/cardano/logs",
+            "log_group_name": "/${log_group_prefix}/{hostname}",
+            "timezone": "UTC",
+            "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ"
           }
         ]
       }

@@ -60,8 +60,15 @@ Two services are available to run depending on your use case. **Both services sh
 - cardano-relay.service
   - Start this service to make the node a relay
 
+To configure these services to run at start-up, run one of the following:
+```sh
+sudo systemctl enable cardano-block-producer.service
+##or
+sudo systemctl enable cardano-relay.service
+```
+
 ## Logging
-Plain text logs are sent to journalctl based on service name. File-based JSON logs are saved to /cardano/logs, which are generally more useful for log
+Plain text logs are sent to journalctl based on service name. File-based JSON logs are saved to `/cardano/logs`, which are generally more useful for log
 aggregation. File-based logs are auto-rotated by cardano-node.
 
 ## Contribute
