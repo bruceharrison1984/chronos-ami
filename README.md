@@ -71,6 +71,16 @@ sudo systemctl enable cardano-relay.service
 Plain text logs are sent to journalctl based on service name. File-based JSON logs are saved to `/cardano/logs`, which are generally more useful for log
 aggregation. File-based logs are auto-rotated by cardano-node.
 
+## Usage
+This image can be used as is, with manual configuration changes made to get it up and running. UserData/CloudInit could also be used to automate
+the configuration of the server once it comes up as well. 
+
+This includes but isn't limited to:
+ - Disable ec2-user account & create new login user
+ - Start the node as a relay/block-producer
+ - Setup auto-rotate SSH keys via Lambda
+ - Load Keys from a secure S3 bucket
+
 ## Contribute
 PRs are very welcome, as well as ADA donations:
 - addr1qx2t4hr27795vwfpqffca6dzt9kfw77h362f0un0h2m8rsn0k2ukr28kxc4fzuxvrwf535zw78cc2p3er9hlnled9nsqhqc9uz

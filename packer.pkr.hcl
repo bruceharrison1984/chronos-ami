@@ -64,6 +64,7 @@ build {
     inline = [
       "chmod -R +x /home/ec2-user/setup/*.sh",
       "/home/ec2-user/setup/init.sh",
+      "/home/ec2-user/setup/cloudwatch.sh",
       "/home/ec2-user/setup/cardano.sh",
       "/home/ec2-user/setup/services.sh",
       "/home/ec2-user/setup/extras.sh",

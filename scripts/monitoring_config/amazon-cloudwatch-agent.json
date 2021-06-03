@@ -101,6 +101,19 @@
           }
         ]
       }
+    },
+    "metrics_collected": {
+      "prometheus": {
+        "cluster_name": "cardano-node",
+        "log_group_name": "/${log_group_prefix}/{hostname}",
+        "prometheus_config_path": "/cardano/config/prometheus.yml",
+        "emf_processor": {
+          "metric_declaration_dedup": true,
+          "metric_namespace": "CWAgent-Prometheus",
+          "metric_unit": {},
+          "metric_declaration": []
+        }
+      }
     }
   }
 }
