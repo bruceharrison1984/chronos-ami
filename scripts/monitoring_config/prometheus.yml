@@ -4,6 +4,6 @@ global:
 scrape_configs:
 - job_name: CARDANO_NODE
   sample_limit: 10000
-  file_sd_configs:
-    - files:
-        - /cardano/config/prometheus_sd_1.yml
+  static_configs:
+    - targets: 
+      - 127.0.0.1:12798
