@@ -46,8 +46,23 @@ We use a large instance size to speed up the build process, but it *should* resu
 ## Users
 - ec2-user is used to login with private key
   - This can be altered via UserData/CloudInit scripts when you launch the image
+- `cardano` user is the owner of the /cardano
+  - systemd services are configured to run under the `cardano` user
 - Cloudwatch runs under the `cwagent` user, 
   - `cwagent` has `adm` permissions
+
+## Services
+Two services are available to run depending on your use case. **Both services should never be running at the same time.**
+
+- cardano-block-producer.service
+  - Start this service to make the node a block-producer
+  - Keys must be in /cardano/keys prior to starting
+- cardano-relay.service
+  - Start this service to make the node a relay
+
+## Logging
+Plain text logs are sent to journalctl based on service name. File-based JSON logs are saved to /cardano/logs, which are generally more useful for log
+aggregation. File-based logs are auto-rotated by cardano-node.
 
 ## Contribute
 PRs are very welcome, as well as ADA donations:
