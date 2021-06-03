@@ -8,12 +8,17 @@ variable "node_home" {
   default = "/cardano"
 }
 
+variable "username" {
+  type = string
+  default = "cardano"
+}
+
 locals { timestamp = regex_replace(timestamp(), "[T:]", "-") }
 
 source "amazon-ebs" "aws_linux" {
   ami_name        = "cardano-node-${local.timestamp}"
   ami_description = "Provisioned AMI for running a Cardano cluster"
-  instance_type   = "m5.4xlarge"
+  instance_type   = "m5.xlarge"
   region          = "us-east-1"
   ena_support     = true
   ssh_username    = "ec2-user"
@@ -24,6 +29,7 @@ source "amazon-ebs" "aws_linux" {
     device_name = "/dev/sda1"
     volume_size = 100
     encrypted = true
+    delete_on_termination = true
   }
   
   source_ami_filter {
@@ -58,13 +64,15 @@ build {
     environment_vars = [
       "NODE_CONFIG=${var.node_config}",
       "NODE_HOME=${var.node_home}",
+      "USERNAME=${var.username}",
     ]
     inline = [
       "chmod -R +x /home/ec2-user/setup/*.sh",
       "/home/ec2-user/setup/init.sh",
       "/home/ec2-user/setup/cardano.sh",
+      "/home/ec2-user/setup/services.sh",
       "/home/ec2-user/setup/extras.sh",
-      "rm -rf /home/ec2-user/setup"
+      "rm -rf /home/ec2-user/setup",
     ]
   }
 }

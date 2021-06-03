@@ -15,9 +15,13 @@ sudo gpasswd --add cwagent adm
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:${CLOUDWATCH_CONFIG}
 sudo systemctl enable amazon-cloudwatch-agent.service
 
-echo -e "\n-= Setup EnvVars =-"
-echo export NODE_HOME=${NODE_HOME} >> $HOME/.bashrc
-echo export NODE_CONFIG=${NODE_CONFIG} >> $HOME/.bashrc
-echo export CARDANO_DB_PATH="${NODE_HOME}/db" >> $HOME/.bashrc
-echo export CARDANO_NODE_SOCKET_PATH="${CARDANO_DB}/socket" >> $HOME/.bashrc
-echo export NODE_PORT="6000" >> $HOME/.bashrc
+echo -e "\n-= Create ${USERNAME} user account"
+sudo adduser ${USERNAME} -m -s /bin/bash
+sudo passwd -d ${USERNAME}
+
+echo -e "\n-= Create ${NODE_HOME} directory =-"
+sudo mkdir ${NODE_HOME}/scripts -p
+sudo mkdir ${NODE_HOME}/keys -p
+sudo mkdir ${NODE_HOME}/config -p
+sudo mkdir ${NODE_HOME}/db -p
+sudo mkdir ${NODE_HOME}/ipc -p
