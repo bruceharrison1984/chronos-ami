@@ -13,5 +13,6 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-c
 sudo systemctl enable amazon-cloudwatch-agent.service
 
 echo -e "\n-= Grant cwagent permission to read log streams =-"
-sudo setfacl -m u:cwagent:x /var/log/messages
-sudo setfacl -m u:cwagent:x /var/log/secure
+sudo setfacl -m u:cwagent:xr /var/log/messages
+sudo setfacl -m u:cwagent:xr /var/log/secure
+sudo setfacl -m u:cwagent:xr /var/log/cloud-init-output.log
