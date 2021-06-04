@@ -125,36 +125,22 @@
           "metric_declaration_dedup": true,
           "metric_namespace": "cardano-prometheus",
           "metric_unit": {
-            "cardano_node_metrics_Mem_resident_int": "Count",
-            "cardano_node_metrics_RTS_gcHeapBytes_int": "Count",
-            "cardano_node_metrics_RTS_gcLiveBytes_int": "Count",
-            "cardano_node_metrics_RTS_gcMajorNum_int": "Count",
-            "cardano_node_metrics_RTS_gcMinorNum_int": "Count",
-            "cardano_node_metrics_RTS_gcticks_int": "Count",
-            "cardano_node_metrics_RTS_mutticks_int": "Count",
-            "cardano_node_metrics_Stat_cputicks_int": "Count",
-            "cardano_node_metrics_Stat_threads_int": "Count",
-            "cardano_node_metrics_blockNum_int": "Count",
-            "cardano_node_metrics_connectedPeers_int": "Count",
-            "cardano_node_metrics_density_real": "Count",
-            "cardano_node_metrics_epoch_int": "Count",
-            "cardano_node_metrics_nodeStartTime_int": "Count",
-            "cardano_node_metrics_slotInEpoch_int": "Count",
-            "cardano_node_metrics_slotNum_int": "Count"
+            "cardano_node_metrics_Mem_resident_int": "Count"
           },
           "metric_declaration": [
             {
               "source_labels": [
-                "job"
+                "job",
+                "application"
               ],
-              "label_matcher": "cardano-metrics",
+              "label_matcher": "cardano-metrics;cardano-node",
               "dimensions": [
                 [
-                  "instance"
+                  "application"
                 ]
               ],
               "metric_selectors": [
-                "^cardano_node_metrics.*"
+                "cardano_node_metrics_Mem_resident_int"
               ]
             }
           ]
