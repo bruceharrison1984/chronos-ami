@@ -37,6 +37,16 @@ source "amazon-ebs" "aws_linux" {
     owners      = ["137112412989"]
   }
 
+  ## temporary instance profile required to initialize cloudwatch-agent prometheus metrics
+  temporary_iam_instance_profile_policy_document {
+    Statement {
+      Effect = "Allow"
+      Action = ["ec2:DescribeTags"]
+      Resource = ["*"]
+    }
+    Version = "2012-10-17"
+  }
+
   tags = {
     Name         = "cardano-node-${local.timestamp}"
     CreatedOn    = timestamp()
