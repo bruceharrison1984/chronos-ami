@@ -1,7 +1,8 @@
 {
   "agent": {
     "metrics_collection_interval": 30,
-    "run_as_user": "cwagent"
+    "run_as_user": "cwagent",
+    "debug": false
   },
   "metrics": {
     "append_dimensions": {
@@ -118,14 +119,45 @@
     },
     "metrics_collected": {
       "prometheus": {
-        "cluster_name": "cardano-node",
         "log_group_name": "/{hostname}",
         "prometheus_config_path": "/cardano/config/prometheus.yml",
         "emf_processor": {
           "metric_declaration_dedup": true,
-          "metric_namespace": "CWAgent-Prometheus",
-          "metric_unit": {},
-          "metric_declaration": []
+          "metric_namespace": "cardano-prometheus",
+          "metric_unit": {
+            "cardano_node_metrics_Mem_resident_int": "Count",
+            "cardano_node_metrics_RTS_gcHeapBytes_int": "Count",
+            "cardano_node_metrics_RTS_gcLiveBytes_int": "Count",
+            "cardano_node_metrics_RTS_gcMajorNum_int": "Count",
+            "cardano_node_metrics_RTS_gcMinorNum_int": "Count",
+            "cardano_node_metrics_RTS_gcticks_int": "Count",
+            "cardano_node_metrics_RTS_mutticks_int": "Count",
+            "cardano_node_metrics_Stat_cputicks_int": "Count",
+            "cardano_node_metrics_Stat_threads_int": "Count",
+            "cardano_node_metrics_blockNum_int": "Count",
+            "cardano_node_metrics_connectedPeers_int": "Count",
+            "cardano_node_metrics_density_real": "Count",
+            "cardano_node_metrics_epoch_int": "Count",
+            "cardano_node_metrics_nodeStartTime_int": "Count",
+            "cardano_node_metrics_slotInEpoch_int": "Count",
+            "cardano_node_metrics_slotNum_int": "Count"
+          },
+          "metric_declaration": [
+            {
+              "source_labels": [
+                "job"
+              ],
+              "label_matcher": "cardano-metrics",
+              "dimensions": [
+                [
+                  "instance"
+                ]
+              ],
+              "metric_selectors": [
+                "^cardano_node_metrics.*"
+              ]
+            }
+          ]
         }
       }
     }
