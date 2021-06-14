@@ -81,6 +81,10 @@ This includes but isn't limited to:
  - Setup auto-rotate SSH keys via Lambda
  - Load Keys from a secure S3 bucket
 
+### Db-Sync
+DB Sync is included and has a prebuilt unit file to run it as a service. You must create a PGPASS file in `${NODE_HOME}/config/pgpass-mainnet` in order
+to start the service. By default, the service depends on `cardano-relay` to already be running, and is not intended to be ran on a block producer. 
+
 ## Contribute
 PRs are very welcome, as well as ADA donations:
 - addr1qx2t4hr27795vwfpqffca6dzt9kfw77h362f0un0h2m8rsn0k2ukr28kxc4fzuxvrwf535zw78cc2p3er9hlnled9nsqhqc9uz
