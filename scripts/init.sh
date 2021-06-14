@@ -19,3 +19,7 @@ sudo mkdir ${NODE_HOME}/db -p
 sudo mkdir ${NODE_HOME}/ipc -p
 sudo mkdir ${NODE_HOME}/logs -p
 sudo mkdir ${NODE_HOME}/sync/schema -p
+
+echo -e "\n-= Create dummy PGPASS file =-"
+echo "hostname:port:database:username:password" | sudo tee ${NODE_HOME}/config/pgpass-mainnet
+sudo chmod 600 ${NODE_HOME}/config/pgpass-mainnet

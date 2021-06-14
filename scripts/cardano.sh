@@ -85,12 +85,6 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-block-producer.sh
 EOF
 chmod +x $NODE_HOME/scripts/start-block-producer.sh
 
-echo -e "\n-= Create dummy PGPASS file =-"
-cat <<EOF >> ${NODE_HOME}/config/pgpass-mainnet
-hostname:port:database:username:password
-EOF
-sudo chmod 600 ${NODE_HOME}/config/pgpass-mainnet
-
 echo -e "\n-= Create Db-Sync Startup Script =-"
 cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 #!/bin/bash
