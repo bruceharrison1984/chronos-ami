@@ -80,7 +80,7 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 
 . ${NODE_HOME}/scripts/.env
 
-PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ./cardano-db-sync-extended-exe \
+PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ./cardano-db-sync-extended \
     --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json
     --socket-path \${CARDANO_NODE_SOCKET_PATH} \
     --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
