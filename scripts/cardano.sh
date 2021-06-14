@@ -11,6 +11,7 @@ echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io
 sudo curl --silent -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1
 sudo tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 sudo rm -rf ${HOME}/cardano
+sudo cp ${HOME}/setup/monitoring_config/db-sync-config.yml ${NODE_HOME}/config
 
 echo -e "\n-= Download Configuration Files =-"
 NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')
@@ -81,7 +82,7 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 . ${NODE_HOME}/scripts/.env
 
 PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ${NODE_HOME}/scripts/cardano-db-sync-extended \
-    --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json \
+    --config \${NODE_HOME}/config/db-sync-config.json \
     --socket-path \${CARDANO_NODE_SOCKET_PATH} \
     --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
     --schema-dir \${NODE_HOME}/sync/schema

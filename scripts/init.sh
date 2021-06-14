@@ -17,4 +17,4 @@ sudo mkdir ${NODE_HOME}/config -p
 sudo mkdir ${NODE_HOME}/db -p
 sudo mkdir ${NODE_HOME}/ipc -p
 sudo mkdir ${NODE_HOME}/logs -p
-sudo mkdir ${NODE_HOME}/sync -p
+sudo mkdir ${NODE_HOME}/sync/schema -p
