@@ -14,7 +14,7 @@ sudo tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude 
 echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
 sudo git clone https://github.com/input-output-hk/cardano-db-sync.git
 cd cardano-db-sync
-sudo cp ./config/mainnet-config.yaml ${NODE_HOME}/config/db-sync-mainnet-config.yaml
+sudo cp ./config/${NODE_CONFIG}-config.yaml ${NODE_HOME}/config/db-sync-${NODE_CONFIG}-config.yaml
 sudo cp ./schema/*.* ${NODE_HOME}/sync/schema
 sudo rm -rf ${HOME}/cardano
 
@@ -33,6 +33,11 @@ echo -e "\n-= Rewriting ${NODE_CONFIG}-config.json =-"
 sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/node/log\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/node/log\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 sudo jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+
+echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
+yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/log\"]] db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/log\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml  | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create .env Script =-"
 sudo cat <<EOF >> ${NODE_HOME}/scripts/.env
@@ -80,6 +85,12 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-block-producer.sh
 EOF
 chmod +x $NODE_HOME/scripts/start-block-producer.sh
 
+echo -e "\n-= Create dummy PGPASS file =-"
+cat <<EOF >> ${NODE_HOME}/config/pgpass-mainnet
+hostname:port:database:username:password
+EOF
+sudo chmod 600 ${NODE_HOME}/config/pgpass-mainnet
+
 echo -e "\n-= Create Db-Sync Startup Script =-"
 cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 #!/bin/bash
@@ -87,7 +98,7 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 . ${NODE_HOME}/scripts/.env
 
 PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ${NODE_HOME}/scripts/cardano-db-sync-extended \
-    --config \${NODE_HOME}/config/db-sync-config.json \
+    --config \${NODE_HOME}/config/db-sync-\${NODE_CONFIG}-config.yaml \
     --socket-path \${CARDANO_NODE_SOCKET_PATH} \
     --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
     --schema-dir \${NODE_HOME}/sync/schema
