@@ -15,6 +15,7 @@ The finished image is placed in your private personal AWS AMI respoitory, so you
 - AWSCLI
 - Default VPC in AWS
   - Not having a default VPC will prevent the build instance from launching
+- Must run as a t3.* instace type due to ENI being enabled
 
 ## Usage
 ```sh
