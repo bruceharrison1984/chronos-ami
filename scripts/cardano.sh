@@ -30,14 +30,14 @@ sudo curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-config.json
 
 echo -e "\n-= Rewriting ${NODE_CONFIG}-config.json =-"
-sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/node/log\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
-sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/node/log\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/node/node\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/node/node\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 sudo jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 
 echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
 yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/log\"]] db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/log\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml  | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml  | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create .env Script =-"
 sudo cat <<EOF >> ${NODE_HOME}/scripts/.env
