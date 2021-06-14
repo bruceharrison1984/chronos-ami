@@ -80,13 +80,13 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
 
 . ${NODE_HOME}/scripts/.env
 
-PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ./cardano-db-sync-extended \
-    --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json
+PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ${NODE_HOME}/scripts/cardano-db-sync-extended \
+    --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json \
     --socket-path \${CARDANO_NODE_SOCKET_PATH} \
     --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
     --schema-dir \${NODE_HOME}/sync/schema
 EOF
-chmod +x $NODE_HOME/scripts/start-block-producer.sh
+chmod +x $NODE_HOME/scripts/start-db-sync.sh
 
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
 sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
