@@ -1,11 +1,15 @@
 #!/bin/bash
 set -e
 
-echo -e "\n-= Download latest binares from https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1 =-"
+echo -e "\n-= Download latest cardano binares from https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1 =-"
 sudo mkdir ${HOME}/cardano
 cd ${HOME}/cardano
 sudo curl --silent -L -o cardano.tar.gz https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1
 sudo tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
+
+echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1 =-"
+sudo curl --silent -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1
+sudo tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 sudo rm -rf ${HOME}/cardano
 
 echo -e "\n-= Download Configuration Files =-"
@@ -67,6 +71,20 @@ cat <<EOF >> ${NODE_HOME}/scripts/start-block-producer.sh
   --shelley-kes-key \${NODE_HOME}/keys/kes.skey \
   --shelley-vrf-key \${NODE_HOME}/keys/vrf.skey \
   --shelley-operational-certificate \${NODE_HOME}/keys/node.cert
+EOF
+chmod +x $NODE_HOME/scripts/start-block-producer.sh
+
+echo -e "\n-= Create Db-Sync Startup Script =-"
+cat <<EOF >> ${NODE_HOME}/scripts/start-db-sync.sh
+#!/bin/bash
+
+. ${NODE_HOME}/scripts/.env
+
+PGPASSFILE=config/pgpass-mainnet ./cardano-db-sync-extended-exe \
+    --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json
+    --socket-path \${CARDANO_NODE_SOCKET_PATH} \
+    --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
+    --schema-dir \${NODE_HOME}/sync/schema
 EOF
 chmod +x $NODE_HOME/scripts/start-block-producer.sh
 
