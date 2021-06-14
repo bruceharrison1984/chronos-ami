@@ -108,7 +108,7 @@
             "log_group_name": "/{hostname}"
           },
           {
-            "file_path": "/cardano/logs/log-**",
+            "file_path": "/cardano/logs/node/log-**",
             "log_stream_name": "/cardano/logs",
             "log_group_name": "/{hostname}",
             "timezone": "UTC",

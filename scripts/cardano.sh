@@ -24,8 +24,8 @@ sudo curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-config.json
 
 echo -e "\n-= Rewriting ${NODE_CONFIG}-config.json =-"
-sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/log\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
-sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/log\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/node/log\"]] ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
+sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/node/log\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 sudo jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 
 echo -e "\n-= Create .env Script =-"
