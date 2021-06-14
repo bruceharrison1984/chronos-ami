@@ -4,7 +4,8 @@ set -e
 echo -e "\n-= Update existing packages =-"
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum update -y
-sudo yum install -y jq moreutils
+sudo yum install -y jq moreutils git
+sudo pip3 install yq
 
 echo -e "\n-= Create ${USERNAME} user account"
 sudo adduser ${USERNAME} -m -s /bin/bash

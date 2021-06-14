@@ -113,6 +113,13 @@
             "log_group_name": "/{hostname}",
             "timezone": "UTC",
             "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ"
+          },
+          {
+            "file_path": "/cardano/logs/sync/log-**",
+            "log_stream_name": "/cardano/sync",
+            "log_group_name": "/{hostname}",
+            "timezone": "UTC",
+            "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ"
           }
         ]
       }

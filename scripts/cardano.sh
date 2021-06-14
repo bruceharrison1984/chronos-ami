@@ -10,8 +10,13 @@ sudo tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configur
 echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1 =-"
 sudo curl --silent -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1
 sudo tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
+
+echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
+sudo git clone https://github.com/input-output-hk/cardano-db-sync.git
+cd cardano-db-sync
+sudo cp ./config/mainnet-config.yaml ${NODE_HOME}/config/db-sync-mainnet-config.yaml
+sudo cp ./schema/*.* ${NODE_HOME}/sync/schema
 sudo rm -rf ${HOME}/cardano
-sudo cp ${HOME}/setup/monitoring_config/db-sync-config.yml ${NODE_HOME}/config
 
 echo -e "\n-= Download Configuration Files =-"
 NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')

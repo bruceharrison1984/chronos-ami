@@ -33,7 +33,7 @@ echo "
  | |      / /\ \ |  _  /| |  | |/ /\ \ |     | |  | |______/ /\ \ | |\/| | | |  
  | |____ / ____ \| | \ \| |__| / ____ \| |\  | |__| |     / ____ \| |  | |_| |_ 
   \_____/_/    \_\_|  \_\_____/_/    \_\_| \_|\____/     /_/    \_\_|  |_|_____|
-                      * EXPERIMENTAL -USE AT OWN RISK-*
-              * https://github.com/bruceharrison1984/cardano-ami*"
+                      * EXPERIMENTAL -USE AT OWN RISK- *
+              * https://github.com/bruceharrison1984/cardano-ami *"
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
