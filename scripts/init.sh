@@ -5,6 +5,7 @@ echo -e "\n-= Update existing packages =-"
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum update -y
 sudo yum install -y jq moreutils git
+sudo -H pip3 install yq 
 sudo amazon-linux-extras install postgresql10
 
 echo -e "\n-= Create ${USERNAME} user account"

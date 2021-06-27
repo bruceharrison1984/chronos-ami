@@ -35,9 +35,9 @@ sudo jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"sc
 sudo jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sudo sponge ${NODE_CONFIG}-config.json
 
 echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
-yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-${NODE_CONFIG}-config.yaml | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml  | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+sudo yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml -y | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+sudo yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-${NODE_CONFIG}-config.yaml -y | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
+sudo yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sudo sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create .env Script =-"
 sudo cat <<EOF >> ${NODE_HOME}/scripts/.env

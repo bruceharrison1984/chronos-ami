@@ -125,34 +125,6 @@
       }
     },
     "metrics_collected": {
-      "prometheus": {
-        "log_group_name": "/{hostname}",
-        "prometheus_config_path": "/cardano/config/prometheus.yml",
-        "emf_processor": {
-          "metric_declaration_dedup": true,
-          "metric_namespace": "cardano-prometheus",
-          "metric_unit": {
-            "cardano_node_metrics_Mem_resident_int": "Count"
-          },
-          "metric_declaration": [
-            {
-              "source_labels": [
-                "job",
-                "application"
-              ],
-              "label_matcher": "cardano-metrics;cardano-node",
-              "dimensions": [
-                [
-                  "application"
-                ]
-              ],
-              "metric_selectors": [
-                "cardano_node_metrics_Mem_resident_int"
-              ]
-            }
-          ]
-        }
-      }
     }
   }
 }
