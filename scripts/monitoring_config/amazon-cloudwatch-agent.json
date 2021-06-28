@@ -88,6 +88,11 @@
       "files": {
         "collect_list": [
           {
+            "file_path": "/var/log/fail2ban.log",
+            "log_stream_name": "/var/log/fail2ban",
+            "log_group_name": "/{hostname}"
+          },
+          {
             "file_path": "/var/log/cloud-init-output.log",
             "log_stream_name": "/var/log/cloud-init-output",
             "log_group_name": "/{hostname}"
