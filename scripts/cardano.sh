@@ -42,6 +42,7 @@ yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\
 echo -e "\n-= Create Relay Startup Script =-"
 cat <<EOF > ${NODE_HOME}/scripts/start-relay.sh
 #!/bin/bash
+set -e
 
 . ${NODE_HOME}/scripts/.env
 
@@ -58,6 +59,7 @@ chmod +x $NODE_HOME/scripts/start-relay.sh
 echo -e "\n-= Create Block Producer Startup Script =-"
 cat <<EOF > ${NODE_HOME}/scripts/start-block-producer.sh
 #!/bin/bash
+set -e
 
 . ${NODE_HOME}/scripts/.env
 
@@ -77,6 +79,7 @@ chmod +x $NODE_HOME/scripts/start-block-producer.sh
 echo -e "\n-= Create Db-Sync Startup Script =-"
 cat <<EOF > ${NODE_HOME}/scripts/start-db-sync.sh
 #!/bin/bash
+set -e
 
 . ${NODE_HOME}/scripts/.env
 
