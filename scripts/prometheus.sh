@@ -14,8 +14,9 @@ chmod +x ${NODE_HOME}/scripts/prometheus-to-cloudwatch
 echo -e "\n-= Create Prometheus-To-Cloudwatch Startup Script =-"
 cat <<EOF > ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
 #!/bin/bash
+set -e
 
-RAW_ID=$(ec2-metadata --instance-id)
+RAW_ID="$(ec2-metadata --instance-id)"
 INSTANCE_ID=${RAW_ID##instance-id:}
 
 export CLOUDWATCH_NAMESPACE=cardano-metrics
