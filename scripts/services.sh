@@ -90,7 +90,6 @@ sudo sh -c "cat <<EOF > /etc/systemd/system/prometheus-to-cloudwatch.service
 
 [Unit]
 Description     = Prometheus-To-Cloudwatch service
-After           = cardano-relay.target 
 
 [Service]
 User            = ${USERNAME}
