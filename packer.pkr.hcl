@@ -8,13 +8,16 @@ variable "username" {
   default = "cardano"
 }
 
-locals { timestamp = regex_replace(timestamp(), "[T:]", "-") }
+locals { 
+  timestamp = regex_replace(timestamp(), "[T:]", "-")
+  target_region = "us-east-1"
+}
 
 source "amazon-ebs" "aws_linux" {
   ami_name        = "cardano-node-${local.timestamp}"
   ami_description = "Provisioned AMI for running a Cardano cluster"
   instance_type   = "m5.xlarge"
-  region          = "us-east-1"
+  region          = "${local.target_region}"
   ena_support     = true
   ssh_username    = "ec2-user"
   encrypt_boot    = true
@@ -70,13 +73,14 @@ build {
       "NODE_CONFIG=${var.node_config}",
       "NODE_HOME=/cardano",
       "USERNAME=${var.username}",
+      "TARGET_REGION=${local.target_region}"
     ]
     inline = [
       "chmod -R +x /home/ec2-user/setup/*.sh",
       "/home/ec2-user/setup/init.sh",
       "/home/ec2-user/setup/cloudwatch.sh",
-      "/home/ec2-user/setup/cardano.sh",
       "/home/ec2-user/setup/prometheus.sh",
+      "/home/ec2-user/setup/cardano.sh",
       "/home/ec2-user/setup/services.sh",
       "/home/ec2-user/setup/extras.sh",
       "rm -rf /home/ec2-user/setup",

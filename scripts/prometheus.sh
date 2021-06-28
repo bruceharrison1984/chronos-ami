@@ -8,18 +8,18 @@ set -e
 DOWNLOAD_URL="https://github.com/cloudposse/prometheus-to-cloudwatch/releases/download/0.14.0/prometheus-to-cloudwatch_linux_amd64"
 
 echo -e "\n-= Download Prometheus-To-Cloudwatch binares from ${DOWNLOAD_URL} =-"
-sudo curl --silent -L -o ${NODE_HOME}/scripts/prometheus-to-cloudwatch "${DOWNLOAD_URL}"
-sudo chmod +x ${NODE_HOME}/scripts/prometheus-to-cloudwatch
+curl -L -o ${NODE_HOME}/scripts/prometheus-to-cloudwatch "${DOWNLOAD_URL}"
+chmod +x ${NODE_HOME}/scripts/prometheus-to-cloudwatch
 
 echo -e "\n-= Create Prometheus-To-Cloudwatch Startup Script =-"
-sudo cat <<EOF >> ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
+cat <<EOF > ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
 #!/bin/bash
-export CLOUDWATCH_NAMESPACE=cardano-db-sync-metrics
-export CLOUDWATCH_REGION=us-east-1
+export CLOUDWATCH_NAMESPACE=cardano-metrics
+export CLOUDWATCH_REGION=${TARGET_REGION}
 export CLOUDWATCH_PUBLISH_TIMEOUT=5
 export PROMETHEUS_SCRAPE_INTERVAL=30
-export PROMETHEUS_SCRAPE_URL=http://localhost:12789/metrics
+export PROMETHEUS_SCRAPE_URL=http://localhost:12798/metrics
 export ACCEPT_INVALID_CERT=true
-${NODE_HOME}/scripts/prometheus-to-cloudwatch
+/usr/local/bin/prometheus-to-cloudwatch
 EOF
-sudo chmod +x ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
+chmod +x ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
