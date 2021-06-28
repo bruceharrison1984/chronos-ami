@@ -22,5 +22,10 @@ echo "
   \_____/_/    \_\_|  \_\_____/_/    \_\_| \_|\____/     /_/    \_\_|  |_|_____|
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/cardano-ami *"
+- All Cardano services are disabled by default
+  - You must manually start them
+    - sudo systemctl start cardano-relay.service
+  - You must enable them to have them autostart
+    - sudo systemctl enable cardano-relay.service
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
