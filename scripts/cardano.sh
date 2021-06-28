@@ -31,7 +31,8 @@ curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
 echo -e "\n-= Rewriting ${NODE_CONFIG}-config.json =-"
 jq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/node/node\"]] ${NODE_CONFIG}-config.json | sponge ${NODE_CONFIG}-config.json
 jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/node/node\", \"scRotation\":null}]" ${NODE_CONFIG}-config.json | sponge ${NODE_CONFIG}-config.json
-jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sponge ${NODE_CONFIG}-config.json
+## Enable block fetch decisions if you want
+# jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sponge ${NODE_CONFIG}-config.json
 
 echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
 yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
