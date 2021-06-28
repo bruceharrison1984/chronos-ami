@@ -20,6 +20,7 @@ export CLOUDWATCH_PUBLISH_TIMEOUT=5
 export PROMETHEUS_SCRAPE_INTERVAL=30
 export PROMETHEUS_SCRAPE_URL=http://localhost:12798/metrics
 export ACCEPT_INVALID_CERT=true
+export INCLUDE_METRICS=cardano_node_metrics_*
 /usr/local/bin/prometheus-to-cloudwatch
 EOF
 chmod +x ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
