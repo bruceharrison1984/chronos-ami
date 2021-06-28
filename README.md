@@ -38,6 +38,9 @@ We use a large instance size to speed up the build process, but it *should* resu
   - Must be configured
 - Fail2Ban installed
   - 10 minute ban
+  - Can easily be changed by altering `/etc/fail2ban/jail.d/sshd.local`
+- Prometheus-To-Cloudwatch
+  - Allows sending Prometheus metrics in to Cloudwatch without a Prometheus server
 
 ## AMI Configuration
 - ENA Enabled
@@ -53,13 +56,19 @@ We use a large instance size to speed up the build process, but it *should* resu
   - `cwagent` has `adm` permissions
 
 ## Services
-Two services are available to run depending on your use case. **Both services should never be running at the same time.**
+Four services are available to run depending on your use case. **Both services should never be running at the same time.**
 
 - cardano-block-producer.service
   - Start this service to make the node a block-producer
   - Keys must be in /cardano/keys prior to starting
 - cardano-relay.service
   - Start this service to make the node a relay
+- prometheus-to-cloudwatch
+  - Start this to begin sending Prometheus metrics to Cloudwatch
+    - IAM permissions must be granted in order to post metrics
+- cardano-db-sync
+  - Begin writing the chain in to a PostGres database
+    - `\${NODE_HOME}/config/pgpass-mainnet` must have a valid connection string
 
 To configure these services to run at start-up, run one of the following:
 ```sh
@@ -67,10 +76,6 @@ sudo systemctl enable cardano-block-producer.service
 ##or
 sudo systemctl enable cardano-relay.service
 ```
-
-## Logging
-Plain text logs are sent to journalctl based on service name. File-based JSON logs are saved to `/cardano/logs`, which are generally more useful for log
-aggregation. File-based logs are auto-rotated by cardano-node.
 
 ## Usage
 This image can be used as is, with manual configuration changes made to get it up and running. UserData/CloudInit could also be used to automate
@@ -82,7 +87,21 @@ This includes but isn't limited to:
  - Setup auto-rotate SSH keys via Lambda
  - Load Keys from a secure S3 bucket
 
-### Db-Sync
+
+## Logging
+Plain text logs are sent to journalctl based on service name. File-based Cardano JSON logs are saved to `/cardano/logs`, which are generally more useful for log
+aggregation. File-based logs are auto-rotated by cardano-node.
+
+### Cloudwatch
+By default, any important log files are automatically sent to Cloudwatch. See `monitoring_config/amazon-cloudwatch-agent.json` if you wish to change this.
+
+### Prometheus Metrics
+All prometheus metrics are sent to Cloudwatch via Prometheus-To-Cloudwatch. 
+
+### IAM Permissions
+In order for logs and metrics to post to Cloudwatch, proper IAM permissions must be applied to the EC2 instance. This can easily be applied by attaching the `CloudWatchAgentServerPolicy` to a Role, and attaching that role as the EC2 instance profile.
+
+## Db-Sync
 DB Sync is included and has a prebuilt unit file to run it as a service. You must create a PGPASS file in `${NODE_HOME}/config/pgpass-mainnet` in order
 to start the service. By default, the service depends on `cardano-relay` to already be running, and is not intended to be ran on a block producer. 
 
