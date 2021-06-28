@@ -15,3 +15,4 @@ echo -e "\n-= Grant cwagent permission to read log streams =-"
 sudo setfacl -m u:cwagent:xr /var/log/messages
 sudo setfacl -m u:cwagent:xr /var/log/secure
 sudo setfacl -m u:cwagent:xr /var/log/cloud-init-output.log
+sudo setfacl -m u:cwagent:xr /var/log/fail2ban.log

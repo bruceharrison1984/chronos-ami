@@ -8,6 +8,19 @@ sudo yum install -y jq moreutils git
 sudo -H pip3 install yq 
 sudo amazon-linux-extras install postgresql10
 
+echo -e "\n-= Install Fail2Ban =-"
+sudo yum install -y fail2ban
+sudo systemctl enable fail2ban
+sudo sh -c 'cat <<EOF > /etc/fail2ban/jail.d/sshd.local
+[sshd]
+enabled = true
+port = ssh
+action = iptables-multiport
+logpath = /var/log/secure
+maxretry = 3
+bantime = 600
+EOF'
+
 echo -e "\n-= Create ${USERNAME} user account"
 sudo adduser ${USERNAME} -m -s /bin/bash
 sudo passwd -d ${USERNAME}
