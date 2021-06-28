@@ -20,6 +20,9 @@ logpath = /var/log/secure
 maxretry = 3
 bantime = 600
 EOF'
+## start fail2ban so we can grant cwagent access to the logs
+sudo systemctl start fail2ban
+
 
 echo -e "\n-= Create ${USERNAME} user account"
 sudo adduser ${USERNAME} -m -s /bin/bash
@@ -47,6 +50,7 @@ chmod 600 ${NODE_HOME}/config/pgpass-mainnet
 echo -e "\n-= Create .env Script =-"
 cat <<EOF > ${NODE_HOME}/scripts/.env
 #!/bin/bash
+set -e
 export NODE_HOME=${NODE_HOME}
 export NODE_CONFIG=${NODE_CONFIG}
 export CARDANO_DB_PATH="${NODE_HOME}/db"
