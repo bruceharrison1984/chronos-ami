@@ -102,8 +102,9 @@ All prometheus metrics are sent to Cloudwatch via Prometheus-To-Cloudwatch.
 In order for logs and metrics to post to Cloudwatch, proper IAM permissions must be applied to the EC2 instance. This can easily be applied by attaching the `CloudWatchAgentServerPolicy` to a Role, and attaching that role as the EC2 instance profile.
 
 ## Db-Sync
-DB Sync is included and has a prebuilt unit file to run it as a service. You must create a PGPASS file in `${NODE_HOME}/config/pgpass-mainnet` in order
-to start the service. By default, the service depends on `cardano-relay` to already be running, and is not intended to be ran on a block producer. 
+DB Sync is included and has a prebuilt unit file to run it as a service. You must alter the PGPASS file  with the correct connection string 
+in `${NODE_HOME}/config/pgpass-mainnet` before starting the service. By default, the service depends on `cardano-relay` to already be running, 
+and is not intended to be ran on a block producer. 
 
 Db-Sync will auto-provision the tables needed, but the underlying database must already exist before starting the service. If the database doesn't exist,
 then the service will fail to start.
