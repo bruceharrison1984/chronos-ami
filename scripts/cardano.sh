@@ -54,9 +54,6 @@ chmod +x ${NODE_HOME}/scripts/start-db-sync.sh
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
 sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
 
-echo -e "\n-= Make ${USERNAME} owner of ${NODE_HOME} directory =-"
-sudo chown -R ${USERNAME} ${NODE_HOME}
-
 echo -e "\n-= Check Cardano is working =-"
 cardano-cli version
 cardano-node version

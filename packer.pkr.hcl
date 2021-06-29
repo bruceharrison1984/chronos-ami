@@ -83,7 +83,7 @@ build {
       "/home/ec2-user/setup/cardano.sh",
       "/home/ec2-user/setup/services.sh",
       "/home/ec2-user/setup/extras.sh",
-      "rm -rf /home/ec2-user/setup",
+      "/home/ec2-user/setup/clean-up.sh",
     ]
   }
 }
