@@ -24,8 +24,8 @@ echo "
               * https://github.com/bruceharrison1984/cardano-ami *
 - All Cardano services are disabled by default
   - You must enable them to start them
-    - sudo systemctl enable cardano-relay.service"
+    - sudo systemctl enable cardano-relay.service
   - You must manually start them
-    - sudo systemctl start cardano-relay.service
+    - sudo systemctl start cardano-relay.service"
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
