@@ -5,7 +5,7 @@ CLOUDWATCH_CONFIG=/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.j
 
 echo -e "\n-= Setup Cloudwatch Agent =-"
 sudo mkdir -p /opt/aws/amazon-cloudwatch-agent/etc/
-sudo cp ${HOME}/setup/config/amazon-cloudwatch-agent.json ${CLOUDWATCH_CONFIG}
+sudo mv ${HOME}/setup/config/amazon-cloudwatch-agent.json ${CLOUDWATCH_CONFIG}
 sudo yum install -y amazon-cloudwatch-agent
 sudo gpasswd --add cwagent cardano
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:${CLOUDWATCH_CONFIG}

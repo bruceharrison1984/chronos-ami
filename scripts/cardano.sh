@@ -4,11 +4,11 @@ set -e
 echo -e "\n-= Download latest cardano binares from https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1 =-"
 mkdir ${HOME}/setup/cardano -p
 cd ${HOME}/setup/cardano
-curl --silent -L -o cardano.tar.gz https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1
+curl -L -o cardano.tar.gz https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux/latest/download/1
 tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 
 echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1 =-"
-curl --silent -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1
+curl -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/job/Cardano/cardano-db-sync/cardano-db-sync-linux/latest/download/1
 tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 
 echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
@@ -22,7 +22,7 @@ NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardan
 DOWNLOAD_URL=https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1
 
 cd ${NODE_HOME}/config
-curl --silent -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
+curl -O ${DOWNLOAD_URL}/${NODE_CONFIG}-byron-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-topology.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-shelley-genesis.json \
   -O ${DOWNLOAD_URL}/${NODE_CONFIG}-alonzo-genesis.json \
@@ -40,15 +40,18 @@ yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-$
 yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create Relay Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.tmp
+mv ${NODE_HOME}/scripts/start-relay.tmp ${NODE_HOME}/scripts/start-relay.sh
 chmod +x ${NODE_HOME}/scripts/start-relay.sh
 
 echo -e "\n-= Create Block Producer Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.tmp
+mv ${NODE_HOME}/scripts/start-block-producer.tmp ${NODE_HOME}/scripts/start-block-producer.sh
 chmod +x ${NODE_HOME}/scripts/start-block-producer.sh
 
 echo -e "\n-= Create Db-Sync Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.tmp
+mv ${NODE_HOME}/scripts/start-db-sync.tmp ${NODE_HOME}/scripts/start-db-sync.sh
 chmod +x ${NODE_HOME}/scripts/start-db-sync.sh
 
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"

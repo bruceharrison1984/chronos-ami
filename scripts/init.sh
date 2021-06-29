@@ -47,5 +47,6 @@ cp ${HOME}/setup/config/pgpass-mainnet ${NODE_HOME}/config/pgpass-mainnet
 chmod 600 ${NODE_HOME}/config/pgpass-mainnet
 
 echo -e "\n-= Create .env Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env.tmp
+mv ${NODE_HOME}/scripts/.env.tmp ${NODE_HOME}/scripts/.env
 chmod +x ${NODE_HOME}/scripts/.env

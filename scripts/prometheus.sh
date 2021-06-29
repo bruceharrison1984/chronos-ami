@@ -12,5 +12,6 @@ curl -L -o ${NODE_HOME}/scripts/prometheus-to-cloudwatch "${DOWNLOAD_URL}"
 chmod +x ${NODE_HOME}/scripts/prometheus-to-cloudwatch
 
 echo -e "\n-= Create Prometheus-To-Cloudwatch Startup Script =-"
-envsubst "TARGET_REGION" < ${HOME}/setup/scripts/start-prometheus-to-cloudwatch.sh > ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
+envsubst "TARGET_REGION" < ${HOME}/setup/scripts/start-prometheus-to-cloudwatch.sh > ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.tmp
+mv ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.tmp ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
 chmod +x ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
