@@ -40,17 +40,17 @@ yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-$
 yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create Relay Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.tmp
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.tmp
 mv ${NODE_HOME}/scripts/start-relay.tmp ${NODE_HOME}/scripts/start-relay.sh
 chmod +x ${NODE_HOME}/scripts/start-relay.sh
 
 echo -e "\n-= Create Block Producer Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.tmp
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.tmp
 mv ${NODE_HOME}/scripts/start-block-producer.tmp ${NODE_HOME}/scripts/start-block-producer.sh
 chmod +x ${NODE_HOME}/scripts/start-block-producer.sh
 
 echo -e "\n-= Create Db-Sync Startup Script =-"
-envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.tmp
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.tmp
 mv ${NODE_HOME}/scripts/start-db-sync.tmp ${NODE_HOME}/scripts/start-db-sync.sh
 chmod +x ${NODE_HOME}/scripts/start-db-sync.sh
 
