@@ -1,0 +1,17 @@
+[Unit]
+Description     = Prometheus-To-Cloudwatch service
+
+[Service]
+User            = ${USERNAME}
+Type            = simple
+WorkingDirectory= ${NODE_HOME}/scripts
+ExecStart       = /bin/bash -c '${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh'
+KillSignal=SIGINT
+TimeoutStopSec=2
+LimitNOFILE=32768
+Restart=always
+RestartSec=5
+SyslogIdentifier=prometheus-to-cloudwatch
+
+[Install]
+WantedBy	= multi-user.target

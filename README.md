@@ -93,7 +93,7 @@ Plain text logs are sent to journalctl based on service name. File-based Cardano
 aggregation. File-based logs are auto-rotated by cardano-node.
 
 ### Cloudwatch
-By default, any important log files are automatically sent to Cloudwatch. See `monitoring_config/amazon-cloudwatch-agent.json` if you wish to change this.
+By default, any important log files are automatically sent to Cloudwatch. See `config/amazon-cloudwatch-agent.json` if you wish to change this.
 
 ### Prometheus Metrics
 All prometheus metrics are sent to Cloudwatch via Prometheus-To-Cloudwatch. 

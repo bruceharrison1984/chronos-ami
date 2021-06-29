@@ -23,7 +23,6 @@ EOF'
 ## start fail2ban so we can grant cwagent access to the logs
 sudo systemctl start fail2ban
 
-
 echo -e "\n-= Create ${USERNAME} user account"
 sudo adduser ${USERNAME} -m -s /bin/bash
 sudo passwd -d ${USERNAME}
@@ -44,17 +43,9 @@ mkdir ${NODE_HOME}/logs -p
 mkdir ${NODE_HOME}/sync/schema -p
 
 echo -e "\n-= Create dummy PGPASS file =-"
-echo "hostname:port:database:username:password" | tee ${NODE_HOME}/config/pgpass-mainnet
+cp ${HOME}/setup/config/pgpass-mainnet ${NODE_HOME}/config/pgpass-mainnet
 chmod 600 ${NODE_HOME}/config/pgpass-mainnet
 
 echo -e "\n-= Create .env Script =-"
-cat <<EOF > ${NODE_HOME}/scripts/.env
-#!/bin/bash
-set -e
-export NODE_HOME=${NODE_HOME}
-export NODE_CONFIG=${NODE_CONFIG}
-export CARDANO_DB_PATH="${NODE_HOME}/db"
-export CARDANO_NODE_SOCKET_PATH="${NODE_HOME}/ipc/node.socket"
-export NODE_PORT="6000"
-EOF
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env
 chmod +x ${NODE_HOME}/scripts/.env

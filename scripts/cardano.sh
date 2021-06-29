@@ -40,56 +40,16 @@ yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-$
 yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Create Relay Startup Script =-"
-cat <<EOF > ${NODE_HOME}/scripts/start-relay.sh
-#!/bin/bash
-set -e
-
-. ${NODE_HOME}/scripts/.env
-
-/usr/local/bin/cardano-node run \
-  --topology \${NODE_HOME}/config/\${NODE_CONFIG}-topology.json \
-  --database-path \${CARDANO_DB_PATH} \
-  --socket-path \${CARDANO_NODE_SOCKET_PATH} \
-  --host-addr 0.0.0.0 \
-  --port \${NODE_PORT} \
-  --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json
-EOF
-chmod +x $NODE_HOME/scripts/start-relay.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.sh
+chmod +x ${NODE_HOME}/scripts/start-relay.sh
 
 echo -e "\n-= Create Block Producer Startup Script =-"
-cat <<EOF > ${NODE_HOME}/scripts/start-block-producer.sh
-#!/bin/bash
-set -e
-
-. ${NODE_HOME}/scripts/.env
-
-/usr/local/bin/cardano-node run \
-  --topology \${NODE_HOME}/config/\${NODE_CONFIG}-topology.json \
-  --database-path \${CARDANO_DB_PATH} \
-  --socket-path \${CARDANO_NODE_SOCKET_PATH} \
-  --host-addr 0.0.0.0 \
-  --port \${NODE_PORT} \
-  --config \${NODE_HOME}/config/\${NODE_CONFIG}-config.json
-  --shelley-kes-key \${NODE_HOME}/keys/kes.skey \
-  --shelley-vrf-key \${NODE_HOME}/keys/vrf.skey \
-  --shelley-operational-certificate \${NODE_HOME}/keys/node.cert
-EOF
-chmod +x $NODE_HOME/scripts/start-block-producer.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.sh
+chmod +x ${NODE_HOME}/scripts/start-block-producer.sh
 
 echo -e "\n-= Create Db-Sync Startup Script =-"
-cat <<EOF > ${NODE_HOME}/scripts/start-db-sync.sh
-#!/bin/bash
-set -e
-
-. ${NODE_HOME}/scripts/.env
-
-PGPASSFILE=\${NODE_HOME}/config/pgpass-mainnet ${NODE_HOME}/scripts/cardano-db-sync-extended \
-    --config \${NODE_HOME}/config/db-sync-\${NODE_CONFIG}-config.yaml \
-    --socket-path \${CARDANO_NODE_SOCKET_PATH} \
-    --state-dir \${NODE_HOME}/sync/ledger-state/mainnet \
-    --schema-dir \${NODE_HOME}/sync/schema
-EOF
-chmod +x $NODE_HOME/scripts/start-db-sync.sh
+envsubst "NODE_HOME" < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.sh
+chmod +x ${NODE_HOME}/scripts/start-db-sync.sh
 
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
 sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
