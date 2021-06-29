@@ -17,10 +17,6 @@ cd cardano-db-sync
 cp ./config/${NODE_CONFIG}-config.yaml ${NODE_HOME}/config/db-sync-${NODE_CONFIG}-config.yaml
 cp ./schema/*.* ${NODE_HOME}/sync/schema
 
-echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
-yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
-yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
 
 echo -e "\n-= Download Configuration Files =-"
 NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')
@@ -39,20 +35,28 @@ jq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\
 ## Enable block fetch decisions if you want
 # jq ".TraceBlockFetchDecisions = true" ${NODE_CONFIG}-config.json | sponge ${NODE_CONFIG}-config.json
 
+echo -e "\n-= Rewriting db-sync-mainnet-config.yaml =-"
+yq '.NodeConfigFile = "./mainnet-config.json"' db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".defaultScribes += [[\"FileSK\"",\"${NODE_HOME}/logs/sync/sync\"]] db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
+yq ".setupScribes += [{\"scFormat\":\"ScJson\", \"scKind\":\"FileSK\", \"scName\": \"${NODE_HOME}/logs/sync/sync\", \"scRotation\":null}]" db-sync-${NODE_CONFIG}-config.yaml -y | sponge db-sync-${NODE_CONFIG}-config.yaml
+
 echo -e "\n-= Create Relay Startup Script =-"
-envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-relay.sh > ${NODE_HOME}/scripts/start-relay.tmp
-mv ${NODE_HOME}/scripts/start-relay.tmp ${NODE_HOME}/scripts/start-relay.sh
-chmod +x ${NODE_HOME}/scripts/start-relay.sh
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-relay.sh > ${HOME}/setup/scripts/start-relay.tmp
+mv ${HOME}/setup/scripts/start-relay.tmp ${NODE_HOME}/scripts/start-relay.sh
+cat ${NODE_HOME}/scripts/start-relay.sh
 
 echo -e "\n-= Create Block Producer Startup Script =-"
-envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-block-producer.sh > ${NODE_HOME}/scripts/start-block-producer.tmp
-mv ${NODE_HOME}/scripts/start-block-producer.tmp ${NODE_HOME}/scripts/start-block-producer.sh
-chmod +x ${NODE_HOME}/scripts/start-block-producer.sh
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-block-producer.sh > ${HOME}/setup/scripts/start-block-producer.tmp
+mv ${HOME}/setup/scripts/start-block-producer.tmp ${NODE_HOME}/scripts/start-block-producer.sh
+cat ${NODE_HOME}/scripts/start-block-producer.sh
 
 echo -e "\n-= Create Db-Sync Startup Script =-"
-envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-db-sync.sh > ${NODE_HOME}/scripts/start-db-sync.tmp
-mv ${NODE_HOME}/scripts/start-db-sync.tmp ${NODE_HOME}/scripts/start-db-sync.sh
-chmod +x ${NODE_HOME}/scripts/start-db-sync.sh
+envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-db-sync.sh > ${HOME}/setup/scripts/start-db-sync.tmp
+mv ${HOME}/setup/scripts/start-db-sync.tmp ${NODE_HOME}/scripts/start-db-sync.sh
+cat ${NODE_HOME}/scripts/start-db-sync.sh
+
+echo -e "\n-= Mark ${NODE_HOME}/scripts/*.sh as executable =-"
+chmod -R +x ${NODE_HOME}/scripts/*.sh
 
 echo -e "\n-= Symlinking scripts in ${NODE_HOME}/scripts/ =-"
 sudo ln -sfL ${NODE_HOME}/scripts/* /usr/local/bin/
