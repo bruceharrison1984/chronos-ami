@@ -8,13 +8,18 @@ variable "username" {
   default = "cardano"
 }
 
+variable "node_version" {
+  type = string
+  default = "1.27.0"
+}
+
 locals { 
   timestamp = regex_replace(timestamp(), "[T:]", "-")
   target_region = "us-east-1"
 }
 
 source "amazon-ebs" "aws_linux" {
-  ami_name        = "cardano-node-${local.timestamp}"
+  ami_name        = "cardano-node-${var.node_version}-${local.timestamp}"
   ami_description = "Provisioned AMI for running a Cardano cluster"
   instance_type   = "m5.xlarge"
   region          = "${local.target_region}"
