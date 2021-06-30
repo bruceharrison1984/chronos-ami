@@ -21,9 +21,9 @@ tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude confi
 echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
 git clone https://github.com/input-output-hk/cardano-db-sync.git
 cd cardano-db-sync
+git checkout 9.0.0
 cp ./config/${NODE_CONFIG}-config.yaml ${NODE_HOME}/config/db-sync-${NODE_CONFIG}-config.yaml
 cp ./schema/*.* ${NODE_HOME}/sync/schema
-
 
 echo -e "\n-= Download Configuration Files =-"
 # NODE_BUILD_NUM=$(curl --silent https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g')
