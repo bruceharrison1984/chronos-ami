@@ -14,14 +14,14 @@ cd ${HOME}/setup/cardano
 curl -L -o cardano.tar.gz https://hydra.iohk.io/build/6263009/download/1/cardano-node-1.27.0-linux.tar.gz
 tar -xvf cardano.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 
-echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io/build/5879158/download/1/cardano-db-sync-9.0.0-linux.tar.gz =-"
-curl -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/build/5879158/download/1/cardano-db-sync-9.0.0-linux.tar.gz
+echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io/build/6905976/download/1/cardano-db-sync-10.0.0-linux.tar.gz =-"
+curl -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/build/6905976/download/1/cardano-db-sync-10.0.0-linux.tar.gz
 tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 
 echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
 git clone https://github.com/input-output-hk/cardano-db-sync.git
 cd cardano-db-sync
-git checkout 9.0.0
+git checkout 10.0.1
 cp ./config/${NODE_CONFIG}-config.yaml ${NODE_HOME}/config/db-sync-${NODE_CONFIG}-config.yaml
 cp ./schema/*.* ${NODE_HOME}/sync/schema
 
