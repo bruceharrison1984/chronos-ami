@@ -18,7 +18,11 @@ echo -e "\n-= Download latest cardano-db-sync binares from https://hydra.iohk.io
 curl -L -o cardano-db-sync.tar.gz https://hydra.iohk.io/build/6905976/download/1/cardano-db-sync-10.0.0-linux.tar.gz
 tar -xvf cardano-db-sync.tar.gz --directory ${NODE_HOME}/scripts --exclude configuration
 
-echo -e "\n-=Clone cardano-db-sync repository to get latest configuration and schema"
+echo -e "\n-= Download most recent cardano-db-sync snapshot"
+sudo curl -L -o cardano-snapshot.tgz https://update-cardano-mainnet.iohk.io/cardano-db-sync/db-sync-snapshot-schema-10-block-5915608-x86_64.tgz
+tar -xvf cardano-snapshot.tgz --directory ${NODE_HOME}/snapshots --exclude configuration
+
+echo -e "\n-= Clone cardano-db-sync repository to get latest configuration and schema =-"
 git clone https://github.com/input-output-hk/cardano-db-sync.git
 cd cardano-db-sync
 git checkout 10.0.1

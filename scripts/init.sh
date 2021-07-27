@@ -35,6 +35,7 @@ sudo chown -R ec2-user ${NODE_HOME}
 
 echo -e "\n-= Create ${NODE_HOME} subdirectories =-"
 mkdir ${NODE_HOME}/scripts -p
+mkdir ${NODE_HOME}/snapshots -p
 mkdir ${NODE_HOME}/keys -p
 mkdir ${NODE_HOME}/config -p
 mkdir ${NODE_HOME}/db -p
