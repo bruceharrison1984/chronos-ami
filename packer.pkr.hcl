@@ -28,8 +28,15 @@ source "amazon-ebs" "aws_linux" {
   encrypt_boot    = true
   ebs_optimized   = true
 
+  ami_block_device_mappings {
+    device_name = "/dev/xvda"
+    volume_size = 100
+    encrypted = true
+    delete_on_termination = true
+  }
+
   launch_block_device_mappings {
-    device_name = "/dev/sda1"
+    device_name = "/dev/xvda"
     volume_size = 100
     encrypted = true
     delete_on_termination = true
