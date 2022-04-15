@@ -22,10 +22,10 @@ echo "
   \_____|_|  |_|_|  \_\\____/|_| \_|\____/|_____/ 
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/cardano-ami *
-- All Chronos services are disabled by default
-  - You must enable them to start them
-    - sudo systemctl enable chronos-relay.service
-  - You must manually start them
-    - sudo systemctl start chronos-relay.service"
+- Before starting the sentry, you must download the QuickSync files
+  - https://quicksync.io/networks/crypto.html
+  - Extract files into /chronos/node/**
+  - Trying to start the Sentry at block 0 will fail due to block mismatch
+  - Once QuickSync`d, sudo systemctl enable chronos-sentry.service"
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd

@@ -20,7 +20,7 @@ locals {
 source "amazon-ebs" "aws_linux" {
   ami_name        = "chronos-sentry-${var.node_version}-${local.timestamp}"
   ami_description = "Provisioned AMI for running a Chronos Sentry"
-  instance_type   = "a1.large"
+  instance_type   = "t3.small"
   region          = "${var.target_region}"
   ena_support     = true
   ssh_username    = "ec2-user"
