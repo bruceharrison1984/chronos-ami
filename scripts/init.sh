@@ -27,6 +27,10 @@ sudo passwd -d ${USERNAME}
 echo -e "\n-= Create ${NODE_HOME} directory =-"
 sudo mkdir ${NODE_HOME} -p
 
+echo -e "\n-= Create ${NODE_HOME} subdirectories =-"
+sudo mkdir ${NODE_HOME}/scripts -p
+sudo mkdir ${NODE_HOME}/node -p
+
 echo -e "\n-= Make ec2-user owner of ${NODE_HOME} directory for installation =-"
 sudo chown -R ec2-user ${NODE_HOME}
 
