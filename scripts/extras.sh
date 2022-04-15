@@ -17,15 +17,19 @@ echo "
  |______\_____|____|_   ____  _   _  ____   _____             
   / ____| |  | |  __ \ / __ \| \ | |/ __ \ / ____|
  | |    | |__| | |__) | |  | |  \| | |  | | (___  
- | |    |  __  |  _  /| |  | | . ` | |  | |\___ \ 
+ | |    |  __  |  _  /| |  | |     | |  | |\___ \ 
  | |____| |  | | | \ \| |__| | |\  | |__| |____) |
   \_____|_|  |_|_|  \_\\____/|_| \_|\____/|_____/ 
                       * EXPERIMENTAL -USE AT OWN RISK- *
-              * https://github.com/bruceharrison1984/cardano-ami *
-- Before starting the sentry, you must download the QuickSync files
-  - https://quicksync.io/networks/crypto.html
-  - Extract files into /chronos/node/**
-  - Trying to start the Sentry at block 0 will fail due to block mismatch
-  - Once QuickSync`d, sudo systemctl enable chronos-sentry.service"
+              * https://github.com/bruceharrison1984/chronos-ami *
+- Before starting the sentry:
+  - Initialize the chain-maind client
+    - /chronos/node/bin/chain-maind init [moniker] --chain-id crypto-org-chain-mainnet-1
+  - You must download and install the chain QuickSync files
+    - https://quicksync.io/networks/crypto.html
+    - Extract files into /chronos/node/**
+    - Trying to start the Sentry at block 0 will fail due to block mismatch
+    - Once QuickSync`d, sudo systemctl enable chronos-sentry.service"
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
+exit 1

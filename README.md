@@ -5,6 +5,8 @@
 This repo contains a HashiCorp Packer template that can be used to build a chronos node image. This can greatly speed up deployment in AWS, as well as
 guarantee consistency between nodes.
 
+This will build an image for an **x64 ARM** instance, not a standard x86/x64 instance. Trying to do non-ARM stuff will certainly fail.
+
 ## Prerequsites
 
 - Packer
