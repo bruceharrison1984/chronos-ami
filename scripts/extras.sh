@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 set -e
 
 echo -e "\n-= Install Google Authentication =-"
@@ -7,7 +7,7 @@ sudo yum -y install google-authenticator qrencode
 
 echo -e "\n-= Setup MOTD =-"
 sudo sh -c 'cat <<EOF > /etc/update-motd.d/30-banner
-#!/bin/bash
+#!/usr/bin/bash
 echo "
   ______ _____ ___                                                              
  |  ____/ ____|__ \                                                             

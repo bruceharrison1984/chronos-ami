@@ -1,8 +1,3 @@
-variable "node_config" {
-  type = string
-  default = "mainnet"
-}
-
 variable "username" {
   type = string
   default = "chronos"
@@ -10,19 +5,23 @@ variable "username" {
 
 variable "node_version" {
   type = string
-  default = "1.27.0"
+  default = "1.2.1"
+}
+
+variable "target_region" {
+  type = string
+  default = "us-east-1"
 }
 
 locals { 
   timestamp = regex_replace(timestamp(), "[T:]", "-")
-  target_region = "us-east-1"
 }
 
 source "amazon-ebs" "aws_linux" {
   ami_name        = "chronos-sentry-${var.node_version}-${local.timestamp}"
   ami_description = "Provisioned AMI for running a Chronos Sentry"
   instance_type   = "a1.large"
-  region          = "${local.target_region}"
+  region          = "${var.target_region}"
   ena_support     = true
   ssh_username    = "ec2-user"
   encrypt_boot    = true
@@ -82,10 +81,10 @@ build {
   }
   provisioner "shell" {
     environment_vars = [
-      "NODE_CONFIG=${var.node_config}",
-      "NODE_HOME=/cardano",
+      "NODE_HOME=/chronos",
+      "NODE_VERSION=${var.node_version}",
       "USERNAME=${var.username}",
-      "TARGET_REGION=${local.target_region}"
+      "TARGET_REGION=${var.target_region}"
     ]
     inline = [
       "chmod -R +x /home/ec2-user/setup/*.sh",

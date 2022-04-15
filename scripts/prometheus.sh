@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 set -e
 
 ## Use Prometheus-To-Cloudwatch to pump prometheus metrics in to Cloudwatch
@@ -15,3 +15,5 @@ set -e
 # envsubst '${TARGET_REGION}' < ${HOME}/setup/scripts/start-prometheus-to-cloudwatch.sh > ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.tmp
 # mv ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.tmp ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
 # chmod +x ${NODE_HOME}/scripts/start-prometheus-to-cloudwatch.sh
+
+## This might not be needed if the prometheus metrics are correctly output with a schema

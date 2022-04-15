@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 set -e
 
 RAW_ID="$(ec2-metadata --instance-id)"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 set -e
 
 echo -e "\n-= Make ${USERNAME} owner of ${NODE_HOME} directory =-"
