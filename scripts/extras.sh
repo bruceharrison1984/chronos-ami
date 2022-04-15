@@ -12,7 +12,7 @@ echo "
   ______ _____ ___                                                              
  |  ____/ ____|__ \                                                             
  | |__ | |       ) |                                                            
- |  __|| |      / /  Amazon Linux 2 AMI                                                           
+ |  __|| |      / /  Amazon Linux 2 AMI (ARM)                                                          
  | |___| |____ / /_                                                             
  |______\_____|____|_   ____  _   _  ____   _____             
   / ____| |  | |  __ \ / __ \| \ | |/ __ \ / ____|
@@ -22,14 +22,15 @@ echo "
   \_____|_|  |_|_|  \_\\____/|_| \_|\____/|_____/ 
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/chronos-ami *
-- Before starting the sentry:
+- Next steps:
   - Initialize the chain-maind client
-    - /chronos/node/bin/chain-maind init [moniker] --chain-id crypto-org-chain-mainnet-1
+    - $> init-sentry.sh
   - You must download and install the chain QuickSync files
     - https://quicksync.io/networks/crypto.html
     - Extract files into /chronos/node/**
-    - Trying to start the Sentry at block 0 will fail due to block mismatch
-    - Once QuickSync`d, sudo systemctl enable chronos-sentry.service"
+    - Trying to start the Sentry without this (at block 0) will fail
+    - Once QuickSync is done, sudo systemctl enable chronos-sentry.service
+  - Setup Google Authenticator login for added security:
+    - https://wiki.archlinux.org/title/Google_Authenticator
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
-exit 1
