@@ -4,9 +4,6 @@ set -e
 echo -e "\n-= Update existing packages =-"
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum update -y
-sudo yum install -y jq moreutils git
-sudo -H pip3 install yq 
-sudo amazon-linux-extras install postgresql10
 
 echo -e "\n-= Install Fail2Ban =-"
 sudo yum install -y fail2ban
@@ -32,20 +29,6 @@ sudo mkdir ${NODE_HOME} -p
 
 echo -e "\n-= Make ec2-user owner of ${NODE_HOME} directory for installation =-"
 sudo chown -R ec2-user ${NODE_HOME}
-
-echo -e "\n-= Create ${NODE_HOME} subdirectories =-"
-mkdir ${NODE_HOME}/scripts -p
-mkdir ${NODE_HOME}/snapshots -p
-mkdir ${NODE_HOME}/keys -p
-mkdir ${NODE_HOME}/config -p
-mkdir ${NODE_HOME}/db -p
-mkdir ${NODE_HOME}/ipc -p
-mkdir ${NODE_HOME}/logs -p
-mkdir ${NODE_HOME}/sync/schema -p
-
-echo -e "\n-= Create dummy PGPASS file =-"
-cp ${HOME}/setup/config/pgpass-mainnet ${NODE_HOME}/config/pgpass-mainnet
-chmod 600 ${NODE_HOME}/config/pgpass-mainnet
 
 echo -e "\n-= Create .env Script =-"
 envsubst '${NODE_HOME} ${NODE_CONFIG}' < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env.tmp

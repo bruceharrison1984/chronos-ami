@@ -5,7 +5,7 @@ variable "node_config" {
 
 variable "username" {
   type = string
-  default = "cardano"
+  default = "chronos"
 }
 
 variable "node_version" {
@@ -19,9 +19,9 @@ locals {
 }
 
 source "amazon-ebs" "aws_linux" {
-  ami_name        = "cardano-node-${var.node_version}-${local.timestamp}"
-  ami_description = "Provisioned AMI for running a Cardano cluster"
-  instance_type   = "m5.xlarge"
+  ami_name        = "chronos-sentry-${var.node_version}-${local.timestamp}"
+  ami_description = "Provisioned AMI for running a Chronos Sentry"
+  instance_type   = "a1.large"
   region          = "${local.target_region}"
   ena_support     = true
   ssh_username    = "ec2-user"
@@ -44,7 +44,7 @@ source "amazon-ebs" "aws_linux" {
   
   source_ami_filter {
     filters = {
-      name                = "amzn2-ami-hvm-*-x86_64-gp2"
+      name                = "amzn2-ami-kernel-*-arm64-gp2"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
@@ -63,7 +63,7 @@ source "amazon-ebs" "aws_linux" {
   }
 
   tags = {
-    Name         = "cardano-node-${local.timestamp}"
+    Name         = "chronos-sentry-${local.timestamp}"
     CreatedOn    = timestamp()
     ENA          = true
     EBSOptimized = true
@@ -92,7 +92,7 @@ build {
       "/home/ec2-user/setup/init.sh",
       "/home/ec2-user/setup/cloudwatch.sh",
       "/home/ec2-user/setup/prometheus.sh",
-      "/home/ec2-user/setup/cardano.sh",
+      "/home/ec2-user/setup/chronos.sh",
       "/home/ec2-user/setup/services.sh",
       "/home/ec2-user/setup/extras.sh",
       "/home/ec2-user/setup/clean-up.sh",

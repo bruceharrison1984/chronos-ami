@@ -14,18 +14,18 @@ echo "
  | |__ | |       ) |                                                            
  |  __|| |      / /  Amazon Linux 2 AMI                                                           
  | |___| |____ / /_                                                             
- |______\_____|____|___  _____          _   _  ____                __  __ _____ 
-  / ____|   /\   |  __ \|  __ \   /\   | \ | |/ __ \         /\   |  \/  |_   _|
- | |       /  \  | |__) | |  | | /  \  |  \| | |  | |______ /  \  | \  / | | |  
- | |      / /\ \ |  _  /| |  | |/ /\ \ |     | |  | |______/ /\ \ | |\/| | | |  
- | |____ / ____ \| | \ \| |__| / ____ \| |\  | |__| |     / ____ \| |  | |_| |_ 
-  \_____/_/    \_\_|  \_\_____/_/    \_\_| \_|\____/     /_/    \_\_|  |_|_____|
+ |______\_____|____|_   ____  _   _  ____   _____             
+  / ____| |  | |  __ \ / __ \| \ | |/ __ \ / ____|
+ | |    | |__| | |__) | |  | |  \| | |  | | (___  
+ | |    |  __  |  _  /| |  | | . ` | |  | |\___ \ 
+ | |____| |  | | | \ \| |__| | |\  | |__| |____) |
+  \_____|_|  |_|_|  \_\\____/|_| \_|\____/|_____/ 
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/cardano-ami *
-- All Cardano services are disabled by default
+- All Chronos services are disabled by default
   - You must enable them to start them
-    - sudo systemctl enable cardano-relay.service
+    - sudo systemctl enable chronos-relay.service
   - You must manually start them
-    - sudo systemctl start cardano-relay.service"
+    - sudo systemctl start chronos-relay.service"
 EOF'
 sudo /usr/bin/systemctl --quiet restart update-motd
