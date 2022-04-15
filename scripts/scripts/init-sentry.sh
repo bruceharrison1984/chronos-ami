@@ -25,5 +25,3 @@ sed -i.bak -E 's#^(create_empty_blocks_interval[[:space:]]+=[[:space:]]+).*$#\1"
 echo -e "\n-= Done! =-"
 echo -e "\n-= Start the sentry by running:  =-"
 echo -e "\n-= sudo systemctl start chronos-sentry.service  =-"
-
-

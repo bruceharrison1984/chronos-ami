@@ -4,6 +4,7 @@ set -e
 echo -e "\n-= Update existing packages =-"
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum update -y
+sudo yum install -y lz4 aria2
 
 echo -e "\n-= Install Fail2Ban =-"
 sudo yum install -y fail2ban
