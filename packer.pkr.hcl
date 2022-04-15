@@ -29,7 +29,7 @@ source "amazon-ebs" "aws_linux" {
 
   ami_block_device_mappings {
     device_name = "/dev/xvda"
-    volume_size = 100
+    volume_size = 300
     encrypted = true
     delete_on_termination = true
   }

@@ -20,7 +20,9 @@ cat ${NODE_HOME}/scripts/init-sentry.sh
 echo -e "\n-= Create Sentry Start Script =-"
 envsubst '${NODE_HOME}' < ${HOME}/setup/scripts/start-sentry.sh > ${HOME}/setup/scripts/start-sentry.tmp
 mv ${HOME}/setup/scripts/start-sentry.tmp ${NODE_HOME}/scripts/start-sentry.sh
-cat ${NODE_HOME}/scripts/start-sentry.sh
+
+echo -e "\n-= Create QuickSync Script =-"
+mv ${HOME}/setup/scripts/download-quicksync.sh ${NODE_HOME}/scripts/download-quicksync.sh
 
 echo -e "\n-= Set ${NODE_HOME}/scripts/*.sh as executable =-"
 chmod -R +x ${NODE_HOME}/scripts/*.sh
