@@ -23,7 +23,7 @@ echo "
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/chronos-ami *
 - Next steps:
-  - su to the ${USERNAME} you chose
+  - su to the username(${USERNAME}) you chose when creating this AMI
   - Initialize the chain-maind client
     - $> init-sentry.sh
   - You must download and install the chain QuickSync files
