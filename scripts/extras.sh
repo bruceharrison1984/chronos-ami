@@ -23,14 +23,16 @@ echo "
                       * EXPERIMENTAL -USE AT OWN RISK- *
               * https://github.com/bruceharrison1984/chronos-ami *
 - Next steps:
+  - su to the ${USERNAME} you chose
   - Initialize the chain-maind client
     - $> init-sentry.sh
   - You must download and install the chain QuickSync files
+    - download-quicksync.sh can be used for this
     - https://quicksync.io/networks/crypto.html
     - Extract files into /chronos/node/**
     - Trying to start the Sentry without this (at block 0) will fail
     - Once QuickSync is done, sudo systemctl enable chronos-sentry.service
   - Setup Google Authenticator login for added security:
-    - https://wiki.archlinux.org/title/Google_Authenticator
+    - https://wiki.archlinux.org/title/Google_Authenticator"
 EOF'
-sudo /usr/bin/systemctl --quiet restart update-motd
+sudo /usr/bin/systemctl restart update-motd

@@ -36,6 +36,6 @@ echo -e "\n-= Make ec2-user owner of ${NODE_HOME} directory for installation =-"
 sudo chown -R ec2-user ${NODE_HOME}
 
 echo -e "\n-= Create .env Script =-"
-envsubst '${NODE_HOME} ${NODE_CONFIG}' < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env.tmp
+envsubst '${NODE_HOME} ${NODE_CONFIG} ${NODE_VERSION} ${USERNAME}' < ${HOME}/setup/scripts/.env > ${NODE_HOME}/scripts/.env.tmp
 mv ${NODE_HOME}/scripts/.env.tmp ${NODE_HOME}/scripts/.env
 chmod +x ${NODE_HOME}/scripts/.env
